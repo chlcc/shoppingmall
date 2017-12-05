@@ -19,12 +19,10 @@ public class UserInfoForm {
 	@Size(min = 4 , max = 12)
 	private String password;
 	@NotEmpty
-	@Size(min = 2 , max = 8)
+	@Size(min = 2 , max = 12)
 	private String userName;
 	
-	
 	private String phone;
-	
 	
 	@NotEmpty
 	@Email

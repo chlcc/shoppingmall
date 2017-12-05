@@ -12,6 +12,7 @@ public class User {
 	private String email;
 	private Data create_at;
 	private Authorization auth;
-	
+	private int point;
+	private Grade grade;
 	
 }

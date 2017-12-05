@@ -22,12 +22,11 @@
 	</beans:bean>
 	
 	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<beans:property name="basename" value="messages"></beans:property>
+		<beans:property name="basenames" value="message/messages"></beans:property>
 	</beans:bean>
 	
-	
-	
 	<context:component-scan base-package="org.sup2is.controller" />
+	<context:component-scan base-package="org.sup2is.repository" />
 	
 	
 	

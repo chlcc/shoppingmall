@@ -1,0 +1,16 @@
+CREATE TABLE `user` (
+  `userId` varchar(45) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `userName` varchar(45) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `authorization` enum('USER','ADMIN') DEFAULT 'USER',
+  `address` varchar(100) NOT NULL,
+  `address_detailed` varchar(45) NOT NULL,
+  `point` int(11) DEFAULT '0',
+  `grade` enum('BRONZE','SILVER','GOLD','VIP') DEFAULT 'BRONZE',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+

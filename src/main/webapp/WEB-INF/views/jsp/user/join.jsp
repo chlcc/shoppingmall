@@ -103,7 +103,7 @@
 	                        			<label for="email"><i class="fa fa-envelope" aria-hidden="true"> : </i></label> 
 	                        		</td>
 	                        		<td>
-	                        			<form:input path="email" placeholder="sup2is@exmaple.co.kr" cssClass="form-control" size="100px;"/>
+	                        			<form:input path="email" placeholder="sup2is@example.co.kr" cssClass="form-control" size="100px;"/>
 	                        		</td>
 	                        	</tr>
                         		<tr>
