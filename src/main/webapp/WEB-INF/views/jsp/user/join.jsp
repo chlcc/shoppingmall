@@ -37,7 +37,7 @@
                         </h1>
                         
                         <table>
-	                        <form:form commandName="userInfoForm" action="join" method="post" cssClass="news-letter mailchimp">
+	                        <form:form commandName="userInfoForm" action="/user/join" method="post" cssClass="news-letter mailchimp">
 	                        	<tr>
 	                        		<td width="40px;">
 	                        			<label for="userId"><i class="fa fa-user" aria-hidden="true"> : </i></label> 
@@ -83,6 +83,36 @@
 	                        			<form:errors path="userName"></form:errors>
 	                        		</td>
 	                        	</tr>
+	                        	
+	                        	<tr>
+	                        		<td>
+	                        			<label for="address"><i class="fa fa-address-card-o" aria-hidden="true"> : </i></label> 
+	                        		</td>
+	                        		<td>
+	                        			<form:input path="address" placeholder="Your address..." cssClass="form-control" size="100px;"/>
+	                        			
+	                        		</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td colspan="2">
+	                        			<form:errors path="address"></form:errors>
+	                        		</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td>
+	                        			<label for="address_detailed"><i class="fa fa-address-card-o" aria-hidden="true"> : </i></label> 
+	                        		</td>
+	                        		<td>
+	                        			<form:input path="address_detailed" placeholder="Your address_detailed..." cssClass="form-control" size="100px;"/>
+	                        			
+	                        		</td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td colspan="2">
+	                        			<form:errors path="address_detailed"></form:errors>
+	                        		</td>
+	                        	</tr>
+	                        	
 	                        	
 	                        	<tr>
 	                        		<td>

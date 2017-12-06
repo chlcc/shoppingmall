@@ -1,12 +1,16 @@
-<!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-<mapper namespace="org.sup2is.repository.UserRepository">
-	
-	<insert id="createUser" parameterType="org.sup2is.model.User">
-		INSERT INTO user (userId, password, userName, phone, email)
-		VALUSE (#{userId}, #{password} , #{userName} , #{phone} , #{email})
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sup2is.mapper.UserRepository">
+
+	<insert id="join" parameterType="org.sup2is.form.UserInfoForm">
+		INSERT INTO user (userId,password,userName,phone,email,address,address_detailed)
+		VALUES (#{userId},#{password},#{userName},#{phone},#{email},#{address},#{address_detailed})
 	</insert>
+	
+	<select id="findByUserId" resultType="org.sup2is.model.User" parameterType="java.lang.String">
+		SELECT * FROM user
+		WHERE userId = #{userId}
+	</select>
 
 </mapper>
