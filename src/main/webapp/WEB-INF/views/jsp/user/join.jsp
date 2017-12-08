@@ -1,23 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 
-<html>
-    <head>
-
-        <title>DesignBinary</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <tags:css></tags:css>
-    </head>
-
-    <body>
-    
-    	<tags:header></tags:header>
-    	<tags:nav></tags:nav>
+<tags:layout>
      <!-- /.intro section -->
         <div id="intro">
             <div class="container">
@@ -35,7 +22,6 @@
                         <h1 >
                             Join
                         </h1>
-                        
                         <table>
 	                        <form:form commandName="userInfoForm" action="/user/join" method="post" cssClass="news-letter mailchimp">
 	                        	<tr>
@@ -58,7 +44,7 @@
 	                        			<label for="password"><i class="fa fa-unlock-alt" aria-hidden="true"> : </i></label> 
 	                        		</td>
 	                        		<td>
-	                        			<form:password path="password" placeholder="Your Password..." cssClass="form-control" size="100px;"/>
+	                        			<small><form:password path="password" placeholder="Your Password..." cssClass="form-control" size="100px;"/></small>
 	                        			
 	                        		</td>
 	                        	</tr>
@@ -86,10 +72,10 @@
 	                        	
 	                        	<tr>
 	                        		<td>
-	                        			<label for="address"><i class="fa fa-address-card-o" aria-hidden="true"> : </i></label> 
+	                        			<label for="address" ><i class="fa fa-address-card-o" aria-hidden="true"> : </i></label> 
 	                        		</td>
 	                        		<td>
-	                        			<form:input path="address" placeholder="Your address..." cssClass="form-control" size="100px;"/>
+	                        			<form:input path="address" placeholder="Your address... Click Me!" cssClass="form-control" size="100px;" onClick="goPopup();" readonly="true"/>
 	                        			
 	                        		</td>
 	                        	</tr>
@@ -147,22 +133,23 @@
                           			 <a href="/login" class="btn-default">Sign In</a>
 	                        		</td>
 	                        	</tr>
-	            				
-	            				
-	            				
 	                        </form:form>
                         </table>
-                        
-                        
                     </div>	
                 </div>			  
             </div>
-        </div>
+         </div>
+         
+         <script language="javascript">
+			function goPopup(){
+				var pop = window.open("/user/jusoPopup","pop","width=570,height=700, scrollbars=yes, resizable=yes"); 
+			}
+			function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+					$("#address").val(roadAddrPart1);
+					$("#address_detailed").val(addrDetail);
+			}
+			
+			</script>
+   </tags:layout>
 
-    	<tags:footer></tags:footer>
 	
-		<div>
-			<tags:script></tags:script>
-		</div>
-    </body>
-</html>

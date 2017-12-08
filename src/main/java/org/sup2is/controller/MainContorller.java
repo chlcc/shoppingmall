@@ -16,18 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class MainContorller extends BaseController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MainContorller.class);
-	
+
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		return "index";
 	}
-	
-	@RequestMapping(value = "/login" , method = RequestMethod.GET)
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "login";
 	}
-	
-	
+
 }

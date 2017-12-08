@@ -27,7 +27,7 @@
 	
 	<context:component-scan base-package="org.sup2is.controller" />
 	<context:component-scan base-package="org.sup2is.repository" />
-	
-	
+	<context:component-scan base-package="org.sup2is.service" />
+	<context:component-scan base-package="org.sup2is.util" />
 	
 </beans:beans>

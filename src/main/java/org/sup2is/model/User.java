@@ -14,5 +14,5 @@ public class User {
 	private Authorization auth;
 	private int point;
 	private Grade grade;
-	
+
 }

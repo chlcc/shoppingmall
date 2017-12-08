@@ -10,10 +10,10 @@
 	        <div class="container">
 	            <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right">
 	                <ul class="nav navbar-nav">
-	                    <li><a href="board/qna">Q&amp;A</a></li>
-	                    <li><a href="user/mypage">mypage</a></li>
-	                    <li><a href="user/join">join us</a></li>
-	                    <li><a href="/login">login</a></li>
+	                    <li><a href="${pagecontext.request.contextpath}/board/qna">Q&amp;A</a></li>
+	                    <li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>
+	                    <li><a href="${pagecontext.request.contextpath}/user/join">join us</a></li>
+	                    <li><a href="${pagecontext.request.contextpath}/login">login</a></li>
 	                </ul>
 	            </div>
 	        </div>
