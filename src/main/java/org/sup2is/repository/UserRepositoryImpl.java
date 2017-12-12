@@ -1,5 +1,6 @@
 package org.sup2is.repository;
 
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +24,20 @@ public class UserRepositoryImpl implements UserRepository{
 		sqlSessionTemplate.insert(namespace + "join", form);
 	}
 
+	
+	
+	
 	@Override
 	public User findByUserId(String userId) {
 		return sqlSessionTemplate.selectOne(namespace + "findByUserId" , userId);
+	}
+
+
+
+
+	@Override
+	public void setAuthority(String userId) {
+		sqlSessionTemplate.insert(namespace + "setAuthority" , userId);
 	}
 
 

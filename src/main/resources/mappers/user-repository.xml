@@ -12,5 +12,9 @@
 		SELECT * FROM user
 		WHERE userId = #{userId}
 	</select>
-
+	
+	<insert id="setAuthority" parameterType="java.lang.String">
+		INSERT INTO authorities (userId,role)
+		VALUES (#{userId}, 'ROLE_USER')
+	</insert>
 </mapper>

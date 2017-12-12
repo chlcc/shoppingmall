@@ -6,6 +6,7 @@
   
   	<mappers>
   		<mapper resource="/mappers/user-repository.xml"/>
+  		<mapper resource="/mappers/board-repository.xml"/>
   	</mappers>
   
   

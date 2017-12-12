@@ -514,6 +514,11 @@ a:hover {
 	position: relative;
 	border-radius: 4px;
 } 
+
+th {
+	font-size: 15px;
+}
+
 .iphone {
 	background: #3eb0f7;
 	transition: all 0.3s ease;

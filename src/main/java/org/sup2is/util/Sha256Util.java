@@ -2,6 +2,8 @@ package org.sup2is.util;
 
 import java.security.MessageDigest;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 public class Sha256Util {
 
 	

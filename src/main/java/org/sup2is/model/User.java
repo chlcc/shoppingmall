@@ -1,5 +1,7 @@
 package org.sup2is.model;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -10,9 +12,9 @@ public class User {
 	private String userName;
 	private String phone;
 	private String email;
-	private Data create_at;
-	private Authorization auth;
+	private int enabled;
+	private Date create_at;
 	private int point;
 	private Grade grade;
-
+	
 }

@@ -23,7 +23,7 @@
                             Join
                         </h1>
                         <table>
-	                        <form:form commandName="userInfoForm" action="/user/join" method="post" cssClass="news-letter mailchimp">
+	                        <form:form commandName="userInfoForm" action="/join" method="post" cssClass="news-letter mailchimp">
 	                        	<tr>
 	                        		<td width="40px;">
 	                        			<label for="userId"><i class="fa fa-user" aria-hidden="true"> : </i></label> 
@@ -142,7 +142,7 @@
          
          <script language="javascript">
 			function goPopup(){
-				var pop = window.open("/user/jusoPopup","pop","width=570,height=700, scrollbars=yes, resizable=yes"); 
+				var pop = window.open("/jusoPopup","pop","width=570,height=500, scrollbars=yes, resizable=yes"); 
 			}
 			function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
 					$("#address").val(roadAddrPart1);

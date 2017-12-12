@@ -1,29 +1,34 @@
 package org.sup2is.controller;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.sup2is.service.UserService;
 
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/test-servlet-context.xml"})
 public class UserRepositoryTest {
 
 	public Logger logger = LoggerFactory.getLogger(UserRepositoryTest.class);
 	
-	public String passwordRule = "^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$";
+	
+	@Autowired
+	private UserService userService;
+	
+	
 	
 	@Test
 	public void test() {
 		
-		Pattern pattern = Pattern.compile(passwordRule);
-		Matcher matcher = pattern.matcher("01031321089");
-		logger.info("matcher : {}" , matcher.find());
+		logger.info("test");
+		
 		
 	}
-	
 }

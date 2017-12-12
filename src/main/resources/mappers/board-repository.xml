@@ -3,18 +3,8 @@
 
 <mapper namespace="org.sup2is.mapper.UserRepository">
 
-	<insert id="join" parameterType="org.sup2is.form.UserInfoForm">
+	<insert id="write" parameterType="org.sup2is.form.WriteForm">
 		INSERT INTO user (userId,password,userName,phone,email,address,address_detailed)
 		VALUES (#{userId},#{password},#{userName},#{phone},#{email},#{address},#{address_detailed})
-	</insert>
-	
-	<select id="findByUserId" resultType="org.sup2is.model.User" parameterType="java.lang.String">
-		SELECT * FROM user
-		WHERE userId = #{userId}
-	</select>
-	
-	<insert id="setAuthority" parameterType="java.lang.String">
-		INSERT INTO authorities (userId,role)
-		VALUES (#{userId}, 'ROLE_USER')
 	</insert>
 </mapper>

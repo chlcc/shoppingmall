@@ -9,6 +9,8 @@ public interface UserRepository {
 	void join(UserInfoForm form) throws Exception;
 
 	User findByUserId(String userId) throws Exception;
+
+	void setAuthority(String userId);
 	
 	
 }
