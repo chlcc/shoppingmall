@@ -9,13 +9,13 @@ public class Board {
 	
 	
 	private int bno;
-	private String userId;
+	private String username;
 	private String category;
 	private String password; 
 	private String title;
 	private String content;
 	private Date create_at;
 	private int viewCnt;
-	
+	private int notice;
 
 }

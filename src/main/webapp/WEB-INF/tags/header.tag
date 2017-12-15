@@ -10,7 +10,7 @@
 	        <div class="container"> 
 	            <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right">
 	                <ul class="nav navbar-nav">
-	                    <li><a href="${pagecontext.request.contextpath}/board">Q&amp;A</a></li>
+	                    <li><a href="${pagecontext.request.contextpath}/board/list">Q&amp;A</a></li>
 	                    
 	                    <sec:authorize access="hasRole('ROLE_USER')">
 	                   		<li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>

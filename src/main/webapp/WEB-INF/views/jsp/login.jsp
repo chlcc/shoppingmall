@@ -21,7 +21,6 @@
                         <h1 >
                             DesignBinary
                         </h1>
-                        
                         <form:form commandName="loginForm" cssClass="news-letter mailchimp">
                         	<form:input path="userId" cssClass="form-control" placeholder="Your ID..."/>
                         	<form:password path="password" cssClass="form-control" placeholder="Your Password..."/>
@@ -30,7 +29,6 @@
                         	<button type="submit" class="btn-primary" style="font-weight: bold">Login</button>
                             <a href="/join" class="btn-default">Sign Up</a>
                         </form:form>
-                        
                     </div>	
                 </div>			  
             </div>
