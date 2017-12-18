@@ -7,4 +7,17 @@
 		INSERT INTO board (username,password,category,title,content)
 		VALUES (#{username},#{password},#{category},#{title},#{content})
 	</insert>
+	
+	<select id="totalCount" resultType="Integer">
+		SELECT COUNT(*)
+		FROM board
+	</select>
+	
+	<select id="listPage" parameterType="org.sup2is.util.PageNavigation" resultType="org.sup2is.model.Board">
+		SELECT *
+		FROM board
+		ORDER BY bno DESC
+		LIMIT #{currentPage} , #{countPage}
+	</select>
+	
 </mapper>

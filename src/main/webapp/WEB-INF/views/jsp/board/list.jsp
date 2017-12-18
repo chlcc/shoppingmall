@@ -55,16 +55,31 @@
 		 	</ul>
 		 </div>         
 	
+	<script src="//code.jquery.com/jquery.min.js"></script> 
 	
-		<script type="text/javascript">
-			
-		
-		
-		
-		function getList() {
-					
-		}
-		</script>
+	<script type="text/javascript">
 	
+	function getList(page) {
+
+		
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/list/" + page,
+			method : 'get',
+			contentType : 'json',
+			success : function (data) {
+				console.log(data);
+			}			
+		});
+		
+	}
+	
+	$(document).ready(function () {
+		
+		getList(1);
+		
+	});
+	</script>
+
 
 </tags:layout>

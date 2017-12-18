@@ -76,7 +76,7 @@
 					  </tbody>              
 		              
 		              </table>
-		              <button type="submit" class="btn-default" style="font-weight: bold;">Submittt</button>
+	                	<input type="button" id="formBtn" class="btn-default" style="font-weight: bold;" value="Submit"></input>
 		              <div id="errors">
 		              </div>
 	              </form:form>
@@ -105,34 +105,38 @@
 
 
 	<script type="text/javascript">
-	$("#boardForm").submit(function (e) {
-		e.preventDefault();
- 		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
- 		var content = $(this).serializeObject();
- 		
+	
+	$("#formBtn").click( function () {
+		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
+		var content = $("#boardForm").serializeObject();
+		
 		$.ajax({
-			url:'/board',
+			url:'${pageContext.request.contextPath}/board',
 			method : 'post',
 			contentType : 'application/json;charset=utf-8',
 			data : JSON.stringify(content) , 
-			type : 'json',
 			success : function (data) {
-			 	if(data.fieldError != null) {
-			 			$("#errors").text("");
+	 			$("#errors").text("");
+				console.log("ajax");
+			  	if(data.fieldError != null) {
 						var errorTemplate = $("#errorTemplate").html();
 						var template = Handlebars.compile(errorTemplate);
 						var html = template(data);
 						$("#errors").append(html);
-				}  
-			 	location.href = "${pageContext.request.contextPath}/board/list";
+						return;
+				}else {
+				 	location.href = "${pageContext.request.contextPath}/board/list";
+				}
 			},
 			error : function (error) {
 				console.log(error);
 			}
 			 
 		}); 
-		
-	});
+	}) ;
+				
+	
+	
 			
 	
 	</script>

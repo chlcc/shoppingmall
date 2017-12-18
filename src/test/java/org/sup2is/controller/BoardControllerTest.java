@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.sup2is.service.UserService;
+import org.sup2is.model.Board;
+import org.sup2is.service.BoardService;
+import org.sup2is.service.BoardServliceImpl;
+import org.sup2is.util.PageNavigation;
 
 
 
@@ -32,7 +37,7 @@ public class BoardControllerTest {
 	
 	
 	@Autowired
-	private UserService userService;
+	private BoardService boardService;
 	
 	@Autowired
 	ApplicationContext context;
@@ -45,20 +50,15 @@ public class BoardControllerTest {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setPrefix("/WEB-INF/view/jsp/");
         viewResolver.setSuffix(".jsp");
-
-        
         
 		this.mockMvc = MockMvcBuilders.standaloneSetup(new BoardController())
 				.setViewResolvers(viewResolver)
 				.build();
-		
-		
+		boardService = new BoardServliceImpl();
 	}
 	
 	@Test
 	public void test() throws Exception {
-		
-
 		this.mockMvc.perform(post("/board")
 				.param("name", "choi"))
 		.andDo(print())
@@ -66,5 +66,20 @@ public class BoardControllerTest {
 		.andExpect(content().contentType("application/json;charset=utf-8"));
 			
 		
+	}
+	@Test
+	public void pageTest() throws Exception {
+
+		boardService = context.getBean(BoardServliceImpl.class);
+		int total = boardService.totalCount();
+		logger.info("total :{}" , total);
+		PageNavigation navigation = new PageNavigation(total, 1);
+		
+		List<Board> list = boardService.listPage(navigation);
+		
+		for(Board board : list) {
+			logger.info(board.toString());
+		}
+		 
 	}
 }
