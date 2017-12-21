@@ -12,12 +12,12 @@ public class BoardForm {
 
 	@NotEmpty
 //	@Size(min = 2, max = 12)
-	private String username;
+	private String userId;
 	@NotEmpty
 	private String category;
-	@NotEmpty
+//	@NotEmpty
 //	@Size(min = 4, max = 10)
-	private String password;
+//	private String password;
 	@NotEmpty
 //	@Size(min = 5)
 	private String title;

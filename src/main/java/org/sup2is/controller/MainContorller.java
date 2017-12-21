@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.sup2is.form.LoginForm;
 import org.sup2is.form.UserInfoForm;
-import org.sup2is.model.User;
 import org.sup2is.service.UserService;
-import org.sup2is.util.AES256Util;
-import org.sup2is.util.Sha256Util;
 
 @Controller
 public class MainContorller extends BaseController {
@@ -60,7 +56,6 @@ public class MainContorller extends BaseController {
 
 	@RequestMapping(value = "join", method = RequestMethod.GET)
 	public String joinPage(@ModelAttribute UserInfoForm form) {
-
 		return "/join";
 	}
 

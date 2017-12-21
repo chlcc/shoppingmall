@@ -1,6 +1,7 @@
 package org.sup2is.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +28,33 @@ public class BoardServliceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Board> listPage(PageNavigation pageNavigation) {
+	public List<Board> listPage(PageNavigation pageNavigation) throws Exception{
 		return boardRepository.listPage(pageNavigation);
 	}
+
+	@Override
+	public Board readOne(int bno) throws Exception {
+		return boardRepository.readOne(bno);
+	}
+
+	@Override
+	public boolean checkBoardAuth(Map<String, Object> param) {
+		Board board = boardRepository.readOne((int)param.get("bno"));
+		if(board.getPassword().equals(param.get("password"))) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void modify(Board board) {
+		boardRepository.modify(board);
+	}
+
+	@Override
+	public int setInvisibleBoard(int bno) {
+		return boardRepository.setInvisibleBoard(bno);
+	}
+
 	
 }

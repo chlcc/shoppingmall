@@ -613,6 +613,8 @@ th {
 .control-group .controls {
 	overflow-x: hidden;
 }
+
+
 /* iPads (portrait) ----------- */
 @media only screen 
 and (min-width : 768px) 

@@ -17,9 +17,11 @@
     		<frame-options disabled="true"/>
     	</headers>
         <intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+        <intercept-url pattern="/board/write" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/login" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="permitAll" />
+        
         <form-login
         	login-page="/login"
         	default-target-url="/index"
@@ -27,15 +29,10 @@
         	password-parameter="password"
         	authentication-failure-url="/login?error"
         />
-        
         <logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
-    	
     	<access-denied-handler error-page="/error" />
-    	    
         <csrf disabled="true"/>
-        
-    </http>
-    
+   </http>
 
    <authentication-manager>
         <authentication-provider>

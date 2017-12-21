@@ -54,7 +54,7 @@ public class BoardControllerTest {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(new BoardController())
 				.setViewResolvers(viewResolver)
 				.build();
-		boardService = new BoardServliceImpl();
+		boardService = context.getBean(BoardServliceImpl.class);
 	}
 	
 	@Test
@@ -70,7 +70,6 @@ public class BoardControllerTest {
 	@Test
 	public void pageTest() throws Exception {
 
-		boardService = context.getBean(BoardServliceImpl.class);
 		int total = boardService.totalCount();
 		logger.info("total :{}" , total);
 		PageNavigation navigation = new PageNavigation(total, 1);
@@ -80,6 +79,25 @@ public class BoardControllerTest {
 		for(Board board : list) {
 			logger.info(board.toString());
 		}
-		 
+		
+	}
+	
+	@Test
+	public void readOne() throws Exception {
+		
+		Board board = boardService.readOne(200);
+		logger.info(board.toString());
+		
+	}
+	
+	
+	@Test
+	public void test2() {
+		
+		String path = "/board/123";
+		String bno = path.substring(path.lastIndexOf("/") + 1, path.length());
+		
+		logger.info(bno);
+		
 	}
 }

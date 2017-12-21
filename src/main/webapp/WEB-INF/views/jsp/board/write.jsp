@@ -1,6 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
+    
+    <style>
+	form{
+		font-size: 15px;
+	}
+    </style>
     
 <tags:layout>
   <!-- /.intro section -->
@@ -38,16 +45,17 @@
 		              </tr>
 		              <tr>
 		              	<th width="10%;"> 
-		              		<label for="username">name</label>
+		              		<label for="userId">name</label>
 		              	</th>
 		              	<td>
-		              		<!-- <input type="text" name="username" class="form-control"/> -->
-		              		<form:input path="username" cssClass="form-control"/>
+							<form:input path="userId" value="${user.userId}" cssClass="form-control" readonly="true"/>
 		          	 	</td>
 		              </tr>
 		              <tr>
-		              		<form:errors path="username" cssClass="form-control"/>
+		              		<form:errors path="userId" cssClass="form-control"/>
 		              </tr>
+		              
+		       <%--        
 		              <tr>
 		              	<th width="10%;"> 
 		              		<label for="password">password</label>
@@ -60,7 +68,9 @@
 			              <td>
 			              		<form:errors path="password" cssClass="form-control"/>
 			          	  </td>
-		          	  </tr>
+		          	  </tr> --%>
+		          	  
+		          	  
 		              </thead>
 					  <tbody>
 					  	<tr>
@@ -87,9 +97,6 @@
 		 
 		 </div>         
 	
-	<
-	
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
 	
 	<script id="errorTemplate" type="text/x-handlebars-template">
 
@@ -109,6 +116,7 @@
 	$("#formBtn").click( function () {
 		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
 		var content = $("#boardForm").serializeObject();
+		console.log(content);
 		
 		$.ajax({
 			url:'${pageContext.request.contextPath}/board',
@@ -116,16 +124,15 @@
 			contentType : 'application/json;charset=utf-8',
 			data : JSON.stringify(content) , 
 			success : function (data) {
-	 			$("#errors").text("");
-				console.log("ajax");
 			  	if(data.fieldError != null) {
-						var errorTemplate = $("#errorTemplate").html();
-						var template = Handlebars.compile(errorTemplate);
-						var html = template(data);
-						$("#errors").append(html);
-						return;
+		 			$("#errors").text("");
+					var errorTemplate = $("#errorTemplate").html();
+					var template = Handlebars.compile(errorTemplate);
+					var html = template(data);
+					$("#errors").append(html);
+					return;
 				}else {
-				 	location.href = "${pageContext.request.contextPath}/board/list";
+				 	location.href = "${pageContext.request.contextPath}/board/list/1";
 				}
 			},
 			error : function (error) {
@@ -133,17 +140,9 @@
 			}
 			 
 		}); 
-	}) ;
-				
-	
-	
-			
+	});
 	
 	</script>
-	
-	
-	
-	
 	
 	<script type="text/javascript" src="/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -159,14 +158,9 @@
 				fOnBeforeUnload : function() {}
 			},
 			fOnAppLoad : function() {
-				//기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
 				oEditors.getById["smartEditor"].exec("PASTE_HTML", [ "" ]);
 			},
 			fCreator : "createSEditor2"
-		});
-		//네이버 에디터 작성 데이터 전송하기 
-		$("#submitModifyBoardBtn").click(function() {
-		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
 		});
 	</script>
 

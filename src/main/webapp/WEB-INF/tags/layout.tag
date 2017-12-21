@@ -9,6 +9,9 @@
 	<tags:css></tags:css>
 </head>
 <body>
+<div id="script">
+	<tags:script></tags:script>
+</div>
 <tags:header></tags:header>
 <tags:nav></tags:nav>
 
@@ -16,10 +19,6 @@
 	<jsp:doBody/>
 </main>
 <tags:footer></tags:footer>
-
-<div id="script">
-	<tags:script></tags:script>
-</div>
 
 </body>
 </html>

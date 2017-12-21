@@ -15,5 +15,12 @@ public interface BoardRepository {
 	int totalCount() throws Exception;
 
 	List<Board> listPage(PageNavigation pageNavigation);
+
+	Board readOne(int bno);
+
+	void modify(Board board);
+
+	int setInvisibleBoard(int bno);
+
 	
 }

@@ -34,11 +34,18 @@ public class PageNavigation {
 		
 		startPage = ((page-1) / 10) * 10 + 1;
 	    endPage = startPage + countPage - 1;
-		
+	    
 		if(endPage > totalPage) {
 			endPage = totalPage;
+			startPage = ((endPage-1)/10) * 10 + 1;
 		}
+		
 		currentPage = (page - 1) * countPage;
+		if((currentPage/ 10) > totalPage) {
+			currentPage = totalPage * 10 - 10;
+			
+		}
+		
 	}
 	
 	

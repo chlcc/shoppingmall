@@ -4,20 +4,40 @@
 <mapper namespace="org.sup2is.mapper.BoardRepository">
 
 	<insert id="write" parameterType="org.sup2is.form.BoardForm">
-		INSERT INTO board (username,password,category,title,content)
-		VALUES (#{username},#{password},#{category},#{title},#{content})
+		INSERT INTO board (userId,category,title,content)
+		VALUES (#{userId},#{category},#{title},#{content})
 	</insert>
 	
 	<select id="totalCount" resultType="Integer">
 		SELECT COUNT(*)
-		FROM board
+	  	  FROM board
 	</select>
 	
 	<select id="listPage" parameterType="org.sup2is.util.PageNavigation" resultType="org.sup2is.model.Board">
 		SELECT *
-		FROM board
+		  FROM board
+		WHERE display = 1
 		ORDER BY bno DESC
 		LIMIT #{currentPage} , #{countPage}
 	</select>
+	
+	<select id="readOne"  resultType="org.sup2is.model.Board">
+		SELECT *
+	      FROM board
+		WHERE bno = #{bno}
+	</select>
+	
+	<update id="modify" parameterType="org.sup2is.model.Board">
+		UPDATE board
+		  SET title = #{title} , content = #{content}
+		WHERE bno = #{bno}
+	</update>
+	
+	<update id="setInvisibleBoard" parameterType="Integer">
+		UPDATE board
+		  SET display = 0
+		WHERE bno = #{bno}
+	</update>
+	
 	
 </mapper>

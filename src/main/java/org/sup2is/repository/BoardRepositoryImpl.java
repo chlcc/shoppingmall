@@ -32,6 +32,21 @@ public class BoardRepositoryImpl implements BoardRepository {
 	public List<Board> listPage(PageNavigation pageNavigation) {
 		return sqlSessionTemplate.selectList(namespace + "listPage", pageNavigation);
 	}
-	
+
+	@Override
+	public Board readOne(int bno) {
+		return sqlSessionTemplate.selectOne(namespace + "readOne" , bno);
+	}
+
+	@Override
+	public void modify(Board board) {
+		sqlSessionTemplate.update(namespace + "modify" , board);
+	}
+
+	@Override
+	public int setInvisibleBoard(int bno) {
+		return sqlSessionTemplate.update(namespace + "setInvisibleBoard" ,bno );
+	}
+
 	
 }
