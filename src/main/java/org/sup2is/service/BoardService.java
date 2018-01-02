@@ -22,5 +22,6 @@ public interface BoardService {
 	void modify(Board board);
 
 	int setInvisibleBoard(int bno);
+
 	
 }

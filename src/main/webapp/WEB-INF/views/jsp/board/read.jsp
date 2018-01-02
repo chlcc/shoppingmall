@@ -9,7 +9,8 @@
 		font-size: 15px;
 	}
     </style>
-    
+<link rel="stylesheet" type="text/css" href="/resources/daumOpenEditor/css/editor.css" charset="utf-8" />
+<script type="text/javascript" charset="utf-8" src="/resources/daumOpenEditor/js/editor_loader.js"></script>
 
 <tags:layout>
 	<!-- /.intro section -->
@@ -61,10 +62,23 @@
 			</form:form>
 			
 			<hr>
+			
+			<div>
+				<h5>reply?</h5>
+				<table>
+					<tr>
+						<th>replyuserId<th>
+					<tr>
+					<tr>
+						<td>
+							<textarea rows="5" class="form-control"></textarea>
+						</td>
+					</tr>
+					
+				</table>
+			</div>
+			
 			<table>
-		 		<tr>
-					<th> reply</th>
-				</tr>
 				<tbody>
 				</tbody>
 				
@@ -76,22 +90,25 @@
 				
 				<sec:authorize access="hasRole('ROLE_USER')">
 				<tr style="border-radius:15px; border: 1px solid #eee; padding: 15px;" >
+				
 					<td width="10%">
 						${user.userId}
 					</td>
 					<td width="80%">
-						<textarea rows="5" class="form-control"></textarea>
+						<textarea rows="5" id="replyContent" class="form-control"></textarea>
 					</td>
 					<td>
-						<input type="button" class="btn-default" value="submit">
+						<input type="button" class="btn-default" id="replyBtn" value="submit">
 					</td>
 				</tr>
 				</sec:authorize>
 			</table>  
+			<textarea id="daumTextEdit" style="display: none;">
+				${board.content}
+			</textarea>
 			
 		</div>
 	</div>
-	
 	
 	<hr>
 	<div class="text-center">
@@ -125,51 +142,25 @@
 
 
 	<script type="text/javascript">
-		$("#modBtn").click(function () {
+		
+		$(document).ready(function () {
 			
-			var title = "<input type='text' id='titleInput' class='form-control' value='${board.title}'/>"
-			$("#title").text("");
-			$("#title").append(title);
-			var content = "<textarea id='smartEditor' rows='20' class='form-control'>${board.content}</textarea>";
-			$("#content").text("");
-			$("#content").append(content);
-			createTextEditer();
+			replyList();
 			
-			$("#delBtn").attr("hidden" , true);
-			$("#modBtn").attr("hidden" , true);
-			$("#btnList").append("<input type='button' onclick='modify(${board.bno})' class='btn-default' style='font-weight: bold;' value='OK'></input>");
 		});
 		
-		$("#delBtn").click(function () {
-			$("#deleteCheckModal").modal('show');
-		});
-		
-		
-		function setInvisibleBoard(bno) {
-			$("#deleteCheckModal").modal('hide');
-			$.ajax({
-				url : "${pageContext.request.contextPath}/board/" + bno,
-				method : 'delete',
-				success : function (data) {
-					location.href = "${pageContext.request.contextPath}/board/list/1";
-				} , 
-				error : function (data) {
-					console.log(data);
-				}
-			});
-		}
 		
 		function modify(bno) {
-			oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
+			
+			Editor.save();
 			
 			var userId = '${board.userId}';
 			var category = '${board.category}';
 			
-			
 			var data = {
 					userId : userId,
 					title : $("#titleInput").val(),
-					content : $("#smartEditor").val(),
+					content : $("#daumTextEdit").val(),
 					category : category
 			};
 			$.ajax({
@@ -196,6 +187,97 @@
 			});
 			
 		}		
+	
+		$("#modBtn").click(function () {
+			var title = "<input type='text' id='titleInput' class='form-control' value='${board.title}'/>"
+			$("#title").text("");
+			$("#title").append(title);
+			
+
+			$("#content").text("");
+			$.ajax({
+				type:'get',
+				url:'/resources/daumOpenEditor/editor_frame.jsp',
+				success : function (content) {
+					$("#content").append(content);
+					setConfig();
+				},error : function () {
+					console.log("에러")
+				}
+			});
+			
+			loadContent('${fileList}');
+			
+			
+			$("#delBtn").attr("hidden" , true);
+			$("#modBtn").attr("hidden" , true);
+			$("#btnList").append("<input type='button' onclick='modify(${board.bno})' class='btn-default' style='font-weight: bold;' value='OK'></input>");
+		});
+		
+		$("#delBtn").click(function () {
+			$("#deleteCheckModal").modal('show');
+		});
+		
+		
+		$("#replyBtn").click(function () {
+			var content = $("#replyContent").val();
+			var data = {
+					userId : '${user.userId}',
+					content : content
+			}
+			console.log(data);
+			$.ajax({
+				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
+				method : 'post',
+				data : JSON.stringify(data),
+				contentType : 'application/json;charset=utf-8',
+				success : function (data) {
+				  	if(data.fieldError != null) {
+						$("#errors").text("");
+						var errorTemplate = $("#errorTemplate").html();
+						var template = Handlebars.compile(errorTemplate);
+						var html = template(data);
+						$("#errors").append(html);
+						return;
+				  	}
+				} , 
+				error : function (data) {
+					console.log(data);
+				}
+			});
+		});
+		
+		function replyList() {
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
+				method : 'get',
+				success : function (data) {
+			  		console.log(data);
+				} , 
+				error : function (data) {
+					console.log(data);
+				}
+			});
+		}
+		
+		
+		
+		function setInvisibleBoard(bno) {
+			$("#deleteCheckModal").modal('hide');
+			$.ajax({
+				url : "${pageContext.request.contextPath}/board/" + bno,
+				method : 'delete',
+				success : function (data) {
+					location.href = "${pageContext.request.contextPath}/board/list/1";
+				} , 
+				error : function (data) {
+					console.log(data);
+				}
+			});
+		}
+
+		
 		
 		$("#listBtn").click(function () {
 			history.back();
@@ -204,27 +286,120 @@
 	</script>
 	
 	
-	<script type="text/javascript" src="/resources/SE2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 	<script type="text/javascript">
-		var oEditors = [];
+	
+	function setConfig(){
+		var config = { 
+			txHost: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */ 
+			txPath: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) /xxx/xxx/ */ 
+			txService: 'sample', /* 수정필요없음. */ 
+			txProject: 'sample', /* 수정필요없음. 프로젝트가 여러개일 경우만 수정한다. */ 
+			initializedId: "", /* 대부분의 경우에 빈문자열 */ 
+			wrapper: "tx_trex_container", /* 에디터를 둘러싸고 있는 레이어 이름(에디터 컨테이너) */ 
+			form: 'boardForm', /* 등록하기 위한 Form 이름 */ 
+			txIconPath: "/resources/daumOpenEditor/images/icon/editor/", /*에디터에 사용되는 이미지 디렉터리, 필요에 따라 수정한다. */ 
+			txDecoPath: "/resources/daumOpenEditor/images/deco/contents/", /*본문에 사용되는 이미지 디렉터리, 서비스에서 사용할 때는 완성된 컨텐츠로 배포되기 위해 절대경로로 수정한다. */ 
+			canvas: { 
+				styles: { 
+					color: "#123456", /* 기본 글자색 */ 
+					fontFamily: "굴림", /* 기본 글자체 */ 
+					fontSize: "10pt", /* 기본 글자크기 */
+					backgroundColor: "#fff", /*기본 배경색 */
+					lineHeight: "1.5", /*기본 줄간격 */
+					padding: "8px" /* 위지윅 영역의 여백 */ 
+				}, 
+				showGuideArea: false 
+				}, 
+				events: { 
+					preventUnload: false
+					}, 
+					sidebar: { 
+						capacity: {
+				            maximum: 2097152
+				        },
+						attachbox: { 
+							show: true, confirmForDeleteAll: true 
+						},
+						attacher:{
+							image:{ 
+								features:{
+									left:250,top:65,width:400,height:190,scrollbars:0
+									},
+								popPageUrl:'${pageContext.request.contextPath}/imagePopup' 
+							}
+						}
+							
+					},
+					size: { 
+						contentWidth: 1000 /* 지정된 본문영역의 넓이가 있을 경우에 설정 */ 
+						},
+					};
+		EditorJSLoader.ready(function(Editor) { 
+			editor = new Editor(config); 
+			}); 
+	}
+	
+	function loadContent() {
 		
-		function createTextEditer() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "smartEditor",
-				sSkinURI : "/resources/SE2/SmartEditor2Skin.html",
-				htParams : {
-					bUseToolbar : true,
-					bUseVerticalResizer : true,
-					bUseModeChanger : true,
-					fOnBeforeUnload : function() {}
-				},
-				fOnAppLoad : function() {
-					oEditors.getById["smartEditor"].exec("PASTE_HTML", [ "" ]);
-				},
-				fCreator : "createSEditor2"
-			});
-		}
+		$.ajax({
+			url:'${pageContext.request.contextPath}/file/getFileList',
+			type : 'get',
+			data : { bno : '${board.bno}'},
+			dataType : 'json', 
+			success : function (data) {
+				
+				
+				var fileList = data.fileList;
+				
+				var attachments = {};
+				attachments['image'] = [];
+				  
+			 	for(var i = 0; i < fileList.length; i++) {
+			 		attachments['image'].push({
+						'attacher': 'image',
+						'data': { 
+							'imageurl': fileList[i].url,
+							'filename': fileList[i].fileName, 
+							'filesize': fileList[i].fileSize, 
+							'originalurl': fileList[i].originalUrl, 
+							'thumburl': fileList[i].originalUrl
+						}
+					});
+			 		Editor.modify({
+						"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+							var allattachments = [];
+							for (var i in attachments) {
+								allattachments = allattachments.concat(attachments[i]);
+							}
+							return allattachments;
+						}(),
+						"content": document.getElementById("daumTextEdit") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+					});
+				}  
+				
+				
+			}, 
+		});
+	}
+	
+
+    function validForm(editor) {
+        var validator = new Trex.Validator();
+        var content = editor.getContent();
+        if (!validator.exists(content)) {
+            alert('내용을 입력하세요');
+            return false;
+        }
+        return true;
+    }
+    
+	function setForm(editor) {
+		var content = editor.getContent();
+		$("#daumTextEdit").val(content)
+		return false;
+	}
+
 	</script>
+	
 	
 </tags:layout>

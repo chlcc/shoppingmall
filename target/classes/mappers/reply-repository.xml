@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sup2is.mapper.ReplyRepository">
+
+	<insert id="addReply" parameterType="org.sup2is.form.ReplyForm">
+		INSERT INTO reply (bno,userId,content)
+		VALUES (#{bno},#{userId},#{content})
+	</insert>
+	
+	<select id="replyList" parameterType="org.sup2is.util.PageNavigation" resultType="org.sup2is.model.Reply">
+		SELECT *
+		  FROM reply
+		WHERE display = 1 AND bno = #{bno}
+		ORDER BY rno DESC
+	</select>
+	
+	
+	
+</mapper>

@@ -16,5 +16,5 @@ public class Board {
 	private Date create_at;
 	private int viewCnt;
 	private int anonymous;
-
+	private int display;
 }

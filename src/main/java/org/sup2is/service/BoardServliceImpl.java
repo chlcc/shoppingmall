@@ -1,25 +1,38 @@
 package org.sup2is.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.sup2is.form.BoardForm;
 import org.sup2is.model.Board;
 import org.sup2is.repository.BoardRepository;
+import org.sup2is.repository.FileRepository;
 import org.sup2is.util.PageNavigation;
 
-@Repository
+@Service
 public class BoardServliceImpl implements BoardService{
 
 	
 	@Autowired
 	private BoardRepository boardRepository;
 	
+	@Autowired
+	private FileRepository fileRepository;
+	
 	@Override
+	@Transactional
 	public void write(BoardForm form) throws Exception {
 		boardRepository.create(form);
+		if(form.getFilenames().size() != 0 && form.getFilenames() != null) {
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("list", form.getFilenames());
+			fileRepository.setFileBno(param);
+		}
 	}
 
 	@Override
@@ -55,6 +68,7 @@ public class BoardServliceImpl implements BoardService{
 	public int setInvisibleBoard(int bno) {
 		return boardRepository.setInvisibleBoard(bno);
 	}
+
 
 	
 }

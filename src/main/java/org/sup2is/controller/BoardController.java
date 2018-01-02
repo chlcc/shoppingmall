@@ -27,6 +27,7 @@ import org.sup2is.form.BoardForm;
 import org.sup2is.model.Board;
 import org.sup2is.model.User;
 import org.sup2is.service.BoardService;
+import org.sup2is.service.FileService;
 import org.sup2is.service.UserService;
 import org.sup2is.util.PageNavigation;
 
@@ -46,6 +47,9 @@ public class BoardController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private FileService fileService;
+	
 	@RequestMapping(value = "write" , method = RequestMethod.GET)
 	public String write(@ModelAttribute BoardForm form , Model model, Principal principal) throws Exception {
 		
@@ -63,6 +67,7 @@ public class BoardController extends BaseController {
 		
 		Map<String,Object> jsonObj = new HashMap<>();
 		
+		
 		if(bindingResult.hasErrors()) {
 			List<FieldError> errors = bindingResult.getFieldErrors();
 			List<String> fieldError = new ArrayList<>(); 
@@ -75,7 +80,7 @@ public class BoardController extends BaseController {
 		try {
 			boardService.write(form);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return jsonObj;
 	}
@@ -99,7 +104,6 @@ public class BoardController extends BaseController {
 
 		PageNavigation pageNavigation = new PageNavigation(boardService.totalCount(), page);
 		List<Board> list = boardService.listPage(pageNavigation);
-		logger.info(pageNavigation.toString());
 		model.addAttribute("pageNavigation", pageNavigation);
 		model.addAttribute("list", list);
 		
@@ -112,6 +116,10 @@ public class BoardController extends BaseController {
 		
 		Board board = boardService.readOne(bno);
 		model.addAttribute("board" , board);
+		
+		if(board == null) {
+			return "/error/error";
+		}
 
 		if(principal != null ) {
 			User user = userService.findByUserId(principal.getName());
@@ -144,7 +152,7 @@ public class BoardController extends BaseController {
 		try {
 			boardService.modify(board);
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 			jsonObj.put("error", e);
 			return jsonObj;
 		}
@@ -163,7 +171,7 @@ public class BoardController extends BaseController {
 		try {
 			int result = boardService.setInvisibleBoard(bno);
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 			jsonObj.put("error", e);
 			return jsonObj;
 		}
@@ -171,6 +179,5 @@ public class BoardController extends BaseController {
 		jsonObj.put("result", "success");
 		return jsonObj;
 	}
-	
 	
 }

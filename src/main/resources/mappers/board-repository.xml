@@ -24,7 +24,7 @@
 	<select id="readOne"  resultType="org.sup2is.model.Board">
 		SELECT *
 	      FROM board
-		WHERE bno = #{bno}
+		WHERE bno = #{bno} AND display = 1
 	</select>
 	
 	<update id="modify" parameterType="org.sup2is.model.Board">

@@ -16,6 +16,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/"/>
+	<resources mapping="/upload/**" location="/upload/"></resources>
 <!-- 
  	<interceptors>
 		<interceptor>
@@ -41,22 +42,15 @@
 	
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
-	
-	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-	    <beans:property name="messageConverters">
-	    <beans:list>    
-	        <beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-	            <beans:property name="supportedMediaTypes">
-	                <beans:list>
-	                    <beans:value>text/html;charset=UTF-8</beans:value>
-	                    <beans:value>application/json;charset=UTF-8</beans:value>
-	                </beans:list>
-	            </beans:property>
-	        </beans:bean>            
-	    </beans:list>
-	    </beans:property>                        
-	</beans:bean>    
 
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" /> 
+	
+	<beans:bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" /> 
+
+	
+	<view-controller path="jusoPopup" view-name="/openAPI/jusoPopup"/>
+	<view-controller path="imagePopup" view-name="/openAPI/daum/image"/>
+	
 	<context:component-scan base-package="org.sup2is.controller" />
 	<context:component-scan base-package="org.sup2is.repository" />
 	<context:component-scan base-package="org.sup2is.service" />

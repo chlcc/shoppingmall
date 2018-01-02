@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sup2is.mapper.FileRepository">
+
+	<insert id="insertFile" parameterType="org.sup2is.model.FileInfo">
+		INSERT INTO attachFile (fileName,originalName,fileSize,url,originalUrl)
+		VALUES (#{fileName},#{originalName},#{fileSize},#{url},#{originalUrl})
+	</insert>
+	
+	<update id="setFileBno" parameterType="java.util.HashMap">
+		UPDATE attachFile
+		SET bno = 
+			(SELECT max(bno) FROM board)
+		WHERE fileName IN
+		<foreach collection="list" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<select id="getFileList" parameterType="Integer" resultType="org.sup2is.model.FileInfo">
+		SELECT *
+		FROM attachFile
+		WHERE bno = #{bno}
+	</select>
+	
+</mapper>

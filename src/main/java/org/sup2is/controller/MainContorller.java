@@ -88,10 +88,4 @@ public class MainContorller extends BaseController {
 		}
 		return "redirect:/login";
 	}
-
-	@RequestMapping("jusoPopup")
-	public String jusoPopup() {
-		return "/jusoPopup";
-	}
-
 }

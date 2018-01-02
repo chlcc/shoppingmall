@@ -23,8 +23,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.sup2is.model.Board;
 import org.sup2is.service.BoardService;
-import org.sup2is.service.BoardServliceImpl;
 import org.sup2is.util.PageNavigation;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -37,12 +38,15 @@ public class BoardControllerTest {
 	
 	
 	@Autowired
-	private BoardService boardService;
+	public BoardService boardService;
 	
 	@Autowired
 	ApplicationContext context;
 	
-	private MockMvc mockMvc;
+	@Autowired
+	public ObjectMapper objectMapper;
+	
+	public MockMvc mockMvc;
 	
 	@Before
 	public void setup() {
@@ -54,7 +58,6 @@ public class BoardControllerTest {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(new BoardController())
 				.setViewResolvers(viewResolver)
 				.build();
-		boardService = context.getBean(BoardServliceImpl.class);
 	}
 	
 	@Test
@@ -64,9 +67,8 @@ public class BoardControllerTest {
 		.andDo(print())
 		.andExpect(status().isOk())
 		.andExpect(content().contentType("application/json;charset=utf-8"));
-			
-		
 	}
+	
 	@Test
 	public void pageTest() throws Exception {
 
@@ -100,4 +102,6 @@ public class BoardControllerTest {
 		logger.info(bno);
 		
 	}
+
 }
+
