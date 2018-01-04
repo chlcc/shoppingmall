@@ -8,13 +8,14 @@ import lombok.Data;
 public class ReplyForm {
 	
 	
-	@NotEmpty
 	private int bno;
+	private int rno;
 	
 	@NotEmpty
 	private String userId;
 	
 	@NotEmpty
 	private String content;
+	
 	
 }

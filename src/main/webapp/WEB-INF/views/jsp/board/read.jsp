@@ -42,7 +42,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan="2" height="300px" id="content">${board.content}</td>
+						<td colspan="2" height="300px" id="content" class="well well-lg">${board.content}</td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -61,23 +61,21 @@
             </div>
 			</form:form>
 			
-			<hr>
+			<hr> 
 			
-			<div>
-				<h5>reply?</h5>
-				<table>
-					<tr>
-						<th>replyuserId<th>
-					<tr>
-					<tr>
-						<td>
-							<textarea rows="5" class="form-control"></textarea>
-						</td>
-					</tr>
-					
-				</table>
-			</div>
-			
+  <div class="row">
+        <div class="comment-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#comments-logout" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+            </ul>             
+            <div class="tab-content">
+                <div class="tab-pane active">                
+                    <ul class="media-list" id="replyUl">
+                    </ul> 
+                </div>
+            </div>
+        </div>
+  </div>
 			<table>
 				<tbody>
 				</tbody>
@@ -89,26 +87,38 @@
 				</sec:authorize>
 				
 				<sec:authorize access="hasRole('ROLE_USER')">
-				<tr style="border-radius:15px; border: 1px solid #eee; padding: 15px;" >
-				
-					<td width="10%">
-						${user.userId}
-					</td>
-					<td width="80%">
-						<textarea rows="5" id="replyContent" class="form-control"></textarea>
-					</td>
-					<td>
-						<input type="button" class="btn-default" id="replyBtn" value="submit">
-					</td>
-				</tr>
+					<div class="row">
+		       			<div class="comment-tabs">
+							<div class="tab-content">
+								<div class="tab-pane active">  
+									<ul class="media-list">
+						 				<li class="media"> 
+						                <a class="pull-left" href="#">
+						                <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+						                </a>
+							                <div class="media-body">
+								                <div class="well well-lg">
+								                <h4 class="media-heading reviews">${user.userId}</h4>
+								                <p class="media-comment" > 
+								               	 <textarea class="form-control" id="replyContent" rows="5"></textarea>
+								                </p>
+								                <a class="btn btn-success btn-circle text-uppercase" id="replyBtn" data-toggle="collapse"><span class="glyphicon glyphicon-comment"></span> submit</a>
+								                </div>              
+							                </div>
+						                </li>      
+					                </ul>
+				                </div>
+			                </div>
+		                </div>
+	                </div>
 				</sec:authorize>
-			</table>  
+			</table>   
 			<textarea id="daumTextEdit" style="display: none;">
-				${board.content}
+			${board.content}
 			</textarea>
 			
 		</div>
-	</div>
+	</div> 
 	
 	<hr>
 	<div class="text-center">
@@ -128,6 +138,11 @@
     </div>
   </div>
 </div>
+<c:if test="${user.userId}">
+	라라랄랄
+</c:if>
+
+
 	<script id="errorTemplate" type="text/x-handlebars-template">
 
 	<div>
@@ -139,30 +154,145 @@
 	</div>
 
 	</script>
+	<script id="replyTemplate" type="text/x-handlebars-template">
 
+ 	 {{#replyList}} 
+	 <li class="media">
+     <a class="pull-left" href="#">
+     <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+     </a>
+     <div class="media-body">
+    	<div class="well well-lg">
+     		<h4 class="media-heading reviews">{{userId}}</h4>
+     		<ul class="media-date reviews list-inline">
+     		<li class="dd">22</li>
+    		<li class="mm">09</li>
+     		<li class="aaaa">2014</li>
+    		</ul>
+   			<p class="media-comment" data-rno="{{rno}}"> 
+   	 			{{content}}
+    		</p>
+			<div data-rno="{{rno}}">
+     		<a class="btn btn-info btn-circle text-uppercase" data-toggle="collapse"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>like</a>
+			{{#isAuth}} 
+			<a class="btn btn-success btn-circle text-uppercase" data-toggle="collapse" onclick="modReply({{rno}})"><i class="fa fa-pencil" aria-hidden="true"></i></span>modify</a>
+		    <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="delReply({{rno}});"><i class="fa fa-trash-o" aria-hidden="true"></i></span>delete</a>
+			{{/isAuth}}
+			</div>  
+     		</div> 
+     	</div> 
+     </li>     
+ 	 {{/replyList}} 
+	</script> 
 
 	<script type="text/javascript">
-		
-		$(document).ready(function () {
+		  
+		function modReply(rno) { 
+			 
+			var content = $(".media-comment[data-rno='"+rno+"']").text().trim();
+			$(".media-comment[data-rno='"+rno+"']").text("");
+			$(".media-comment[data-rno='"+rno+"']").append("<textarea class='form-control' data-rno='"+rno+"' rows='5'>" + content + "</textarea>");
+			$("div[data-rno='"+rno+"']").text("");
+			$("div[data-rno='"+rno+"']").append("<a class='btn btn-success btn-circle text-uppercase' data-toggle='collapse' onclick='modReplySubmit("+rno+")'><span class='glyphicon glyphicon-comment'></span>submit</a>");
 			
+		}	
+		 
+		function modReplySubmit (rno) {
+			
+			var content = $("textarea[data-rno='"+rno+"']").val();
+			
+			var data = {  
+					rno : rno,
+					userId : '${user.userId}',
+					content : content
+			}
+			console.log(data); 
+			 
+			$.ajax({
+				url : "${pageContext.request.contextPath}/reply/" + rno,
+				method : "put",  
+				dataType : "json",
+				contentType : 'application/json;charset=utf8',
+				data : JSON.stringify(data),
+				success : function (data) {
+					var fieldError = data.fieldError;
+					if(data.fieldError !== undefined) {
+						data.fieldError.forEach(function (value) {
+							alert(value);
+						}); 
+						return;
+					} 
+					replyList();
+					
+				},error : function (data) {
+					console.log(data);
+				}
+			});
+		 
+		}
+
+		
+		
+		function delReply(rno) {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/reply/" + rno,
+				method : "delete",  
+				dataType : "json",				 
+				success : function (data) {
+					replyList();
+				},error : function (data) {
+					console.log(data);
+				}
+			});
+		}	
+	
+	
+	
+		Handlebars.registerHelper("isAuth",function (options) {
+			 
+			var userId = this.userId;
+			var result = false;
+			
+		 	$.ajax({
+				url : "${pageContext.request.contextPath}/getCurrentUser",
+				method : "get",  
+				async : false,
+				dataType : "json",				 
+				success : function (data) {
+					if(!(Object.keys(data).length === 0) && data.user.userId == userId){
+						result = true;
+					} 
+				},error : function (data) {
+					console.log(data);
+				}
+			});
+		 	if(result) {
+		 		return options.fn(this);
+		 	}else {
+		 		return options.inverse(this);
+		 	}
+		});
+	 
+	
+		$(document).ready(function () {
+			 
 			replyList();
 			
 		});
 		
+		 
 		
 		function modify(bno) {
-			
 			Editor.save();
-			
 			var userId = '${board.userId}';
 			var category = '${board.category}';
-			
 			var data = {
 					userId : userId,
 					title : $("#titleInput").val(),
 					content : $("#daumTextEdit").val(),
 					category : category
 			};
+			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/board/" + bno,
 				method : 'put',
@@ -221,25 +351,26 @@
 		
 		$("#replyBtn").click(function () {
 			var content = $("#replyContent").val();
+			
 			var data = {
 					userId : '${user.userId}',
 					content : content
 			}
 			console.log(data);
-			$.ajax({
+			 $.ajax({
 				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
 				method : 'post',
 				data : JSON.stringify(data),
 				contentType : 'application/json;charset=utf-8',
 				success : function (data) {
-				  	if(data.fieldError != null) {
-						$("#errors").text("");
-						var errorTemplate = $("#errorTemplate").html();
-						var template = Handlebars.compile(errorTemplate);
-						var html = template(data);
-						$("#errors").append(html);
+					var fieldError = data.fieldError;
+					if(data.fieldError !== undefined) {
+						data.fieldError.forEach(function (value) {
+							alert(value);
+						}); 
 						return;
-				  	}
+					} 
+				  	replyList();
 				} , 
 				error : function (data) {
 					console.log(data);
@@ -253,15 +384,17 @@
 				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
 				method : 'get',
 				success : function (data) {
-			  		console.log(data);
+					$("#replyUl").text(""); 
+					var replyTemplate = $("#replyTemplate").html();
+					var template = Handlebars.compile(replyTemplate);
+					var html = template(data);
+					$("#replyUl").append(html);
 				} , 
 				error : function (data) {
-					console.log(data);
+					console.log(data); 
 				}
 			});
 		}
-		
-		
 		
 		function setInvisibleBoard(bno) {
 			$("#deleteCheckModal").modal('hide');
@@ -277,14 +410,12 @@
 			});
 		}
 
-		
-		
 		$("#listBtn").click(function () {
 			history.back();
 		});
 		
+		
 	</script>
-	
 	
 	<script type="text/javascript">
 	
@@ -381,7 +512,6 @@
 			}, 
 		});
 	}
-	
 
     function validForm(editor) {
         var validator = new Trex.Validator();

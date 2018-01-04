@@ -1,8 +1,12 @@
 package org.sup2is.controller;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -20,8 +24,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.sup2is.form.LoginForm;
 import org.sup2is.form.UserInfoForm;
+import org.sup2is.model.User;
 import org.sup2is.service.UserService;
 
 @Controller
@@ -44,8 +50,10 @@ public class MainContorller extends BaseController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login(@ModelAttribute LoginForm form, BindingResult bindingResult,
+	public String login(@ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request,
 			@RequestParam(value = "error" , required = false)String error) {
+		String referer = request.getHeader("Referer");
+		request.getSession().setAttribute("prevPage", referer);
 		
 		if(error != null) {
 			bindingResult.addError(new FieldError("loginForm", "password", message.getMessage("invalid.access", null, Locale.getDefault())));
@@ -88,4 +96,38 @@ public class MainContorller extends BaseController {
 		}
 		return "redirect:/login";
 	}
+	
+	@RequestMapping("getCurrentUser")
+	@ResponseBody
+	public Map<String, Object> getCurrentUser(Principal principal) throws Exception {
+		
+		Map<String, Object> jsonObj = new HashMap<>();
+		
+		if(principal != null) {
+			User user = userService.findByUserId(principal.getName());
+			jsonObj.put("user", user);
+		}
+		
+		return jsonObj;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,6 +25,15 @@ public class ReplyRepositoryImpl implements ReplyRepository{
 	public List<Reply> replyList(int bno) {
 		return sqlSessionTemplate.selectList(namespace + "replyList" , bno); 
 	}
-	
 
+	@Override
+	public void modReply(ReplyForm form) {
+		sqlSessionTemplate.update(namespace + "modReply" , form);
+	}
+
+	@Override
+	public void delReply(int rno) {
+		sqlSessionTemplate.update(namespace + "delReply" , rno);
+	}
+	
 }

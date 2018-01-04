@@ -24,6 +24,16 @@ public class ReplyServiceImpl implements ReplyService{
 	public List<Reply> replyList(int bno) {
 		return replyRepository.replyList(bno);
 	}
+
+	@Override
+	public void modReply(ReplyForm form) {
+		replyRepository.modReply(form);
+	}
+
+	@Override
+	public void delReply(int rno) {
+		replyRepository.delReply(rno);
+	}
 	
 	
 	

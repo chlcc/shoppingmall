@@ -27,7 +27,6 @@ import org.sup2is.form.BoardForm;
 import org.sup2is.model.Board;
 import org.sup2is.model.User;
 import org.sup2is.service.BoardService;
-import org.sup2is.service.FileService;
 import org.sup2is.service.UserService;
 import org.sup2is.util.PageNavigation;
 
@@ -46,9 +45,6 @@ public class BoardController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private FileService fileService;
 	
 	@RequestMapping(value = "write" , method = RequestMethod.GET)
 	public String write(@ModelAttribute BoardForm form , Model model, Principal principal) throws Exception {
@@ -166,10 +162,10 @@ public class BoardController extends BaseController {
 	public Map<String, Object> delete(@PathVariable("bno")int bno) throws Exception {
 		
 		Map<String, Object> jsonObj = new HashMap<>();
-		Board board = boardService.readOne(bno);
+		boardService.readOne(bno);
 		
 		try {
-			int result = boardService.setInvisibleBoard(bno);
+			boardService.setInvisibleBoard(bno);
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 			jsonObj.put("error", e);

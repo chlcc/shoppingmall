@@ -24,9 +24,9 @@
         
         <form-login
         	login-page="/login"
-        	default-target-url="/index"
         	username-parameter="userId"
         	password-parameter="password"
+        	authentication-success-handler-ref="customLoginSuccessHandler"
         	authentication-failure-url="/login?error"
         />
         <logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
@@ -51,6 +51,11 @@
         </authentication-provider>
         
     </authentication-manager>
+
+	<beans:bean id="customLoginSuccessHandler" class="org.sup2is.handler.CustomLoginSuccessHandler">
+		<beans:constructor-arg value="/index">
+		</beans:constructor-arg>
+	</beans:bean>
 
 </beans:beans>
 

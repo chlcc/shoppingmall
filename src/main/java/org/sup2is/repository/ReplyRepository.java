@@ -10,5 +10,9 @@ public interface ReplyRepository {
 	void addReply(ReplyForm form);
 
 	List<Reply> replyList(int bno);
+
+	void modReply(ReplyForm form);
+
+	void delReply(int rno);
 	
 }

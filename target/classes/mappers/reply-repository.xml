@@ -12,9 +12,25 @@
 		SELECT *
 		  FROM reply
 		WHERE display = 1 AND bno = #{bno}
-		ORDER BY rno DESC
 	</select>
 	
+	<update id="modReply" parameterType="org.sup2is.form.ReplyForm">
+		UPDATE
+		  reply
+		SET 
+		  content = #{content}
+		WHERE
+		  rno = #{rno} 
+	</update>
+	
+	<update id="delReply" parameterType="java.lang.Integer">
+		UPDATE
+		  reply
+		SET 
+		  display = 0
+		WHERE
+		  rno = #{rno} 
+	</update>
 	
 	
 </mapper>
