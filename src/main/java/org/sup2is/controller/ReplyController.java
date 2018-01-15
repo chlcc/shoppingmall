@@ -1,10 +1,8 @@
 package org.sup2is.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.sup2is.form.ReplyForm;
 import org.sup2is.model.Reply;
 import org.sup2is.service.ReplyService;
+import org.sup2is.util.JsonObject;
 
 @Controller
 @RequestMapping("reply")
@@ -35,79 +34,79 @@ public class ReplyController extends BaseController{
 	
 	@RequestMapping(value = "/{bno}" , method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> replyList(@PathVariable("bno")int bno) {
-		Map<String, Object> jsonObj = new HashMap<>();
+	public JsonObject replyList(@PathVariable("bno")int bno) {
 		
-		List<Reply> replyList = replyService.replyList(bno);
+		try {
+			List<Reply> replyList = replyService.replyList(bno);
+			return JsonObject.create(replyList);
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+			return JsonObject.create(e);
+		}
 		
-		jsonObj.put("replyList", replyList);
-		
-		return jsonObj;
 	}
 	
 	@RequestMapping(value = "/{bno}" , method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addReply(@RequestBody @Valid ReplyForm form , BindingResult bindingResult,
+	public JsonObject addReply(@RequestBody @Valid ReplyForm form , BindingResult bindingResult,
 			@PathVariable("bno")int bno) {
-		Map<String, Object> jsonObj = new HashMap<>();
-		form.setBno(bno);
 		
+		form.setBno(bno);
 		if(bindingResult.hasErrors()) {
-			List<FieldError> errors = bindingResult.getFieldErrors();
-			List<String> fieldError = new ArrayList<>(); 
-			for(FieldError error : errors) {
-				fieldError.add(message.getMessage(error.getCode(), error.getArguments(), Locale.getDefault()));
+			List<String> fieldErrors = new ArrayList<>(); 
+			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+				fieldErrors.add(message.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.getDefault()));
 			}
-			jsonObj.put("fieldError", fieldError);
-			return jsonObj;
+			return JsonObject.create(fieldErrors);
 		}
+		
 		try {
 			replyService.addReply(form);
+			return JsonObject.create();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
+			return JsonObject.create(e);
 		}
 		
-		return jsonObj;
 	}
 	
 	@RequestMapping(value = "/{rno}" , method = RequestMethod.PUT)
 	@ResponseBody
-	public Map<String, Object> modReply(@RequestBody @Valid ReplyForm form , BindingResult bindingResult,
+	public JsonObject modReply(@RequestBody @Valid ReplyForm form , BindingResult bindingResult,
 			@PathVariable("rno")int rno) {
-		Map<String, Object> jsonObj = new HashMap<>();
 		
 		logger.info("form : {}" , form);
 		
 		if(bindingResult.hasErrors()) {
-			List<FieldError> errors = bindingResult.getFieldErrors();
-			List<String> fieldError = new ArrayList<>(); 
-			for(FieldError error : errors) {
-				fieldError.add(message.getMessage(error.getCode(), error.getArguments(), Locale.getDefault()));
+			List<String> fieldErrors = new ArrayList<>(); 
+			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+				fieldErrors.add(message.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.getDefault()));
 			}
-			jsonObj.put("fieldError", fieldError);
-			return jsonObj;
-		}
-		try {
-			replyService.modReply(form);
-		}catch (Exception e) {
-			logger.error(e.getMessage());
+			return JsonObject.create(fieldErrors);
 		}
 		
-		return jsonObj;
+		try {
+			replyService.modReply(form);
+			return JsonObject.create();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+			return JsonObject.create(e);
+		}
+		
 	}
 	
 	@RequestMapping(value ="/{rno}" , method = RequestMethod.DELETE)
 	@ResponseBody
-	public Map<String,Object> delReply(@PathVariable("rno")int rno) {
+	public JsonObject delReply(@PathVariable("rno")int rno) {
 		
-		Map<String, Object> jsonObj = new HashMap<>();
 		try {
 			replyService.delReply(rno);
+			return JsonObject.create();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
+			return JsonObject.create(e);
 		}
 		
-		return jsonObj;
 	}
 	
 	

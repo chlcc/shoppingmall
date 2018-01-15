@@ -1,6 +1,7 @@
 package org.sup2is.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -17,4 +18,6 @@ public class Board {
 	private int viewCnt;
 	private int anonymous;
 	private int display;
+	private List<String> filenames;
+	
 }

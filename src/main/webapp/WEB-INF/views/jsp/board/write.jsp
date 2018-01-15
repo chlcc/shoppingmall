@@ -141,7 +141,8 @@
 					contentType : 'application/json;charset=utf-8',
 					data : JSON.stringify(content) , 
 					success : function (data) {
-					  	if(data.fieldError != null) {
+						console.log(data);
+					  	if(!(Object.keys(data.fieldError).length === 0)) {
 				 			$("#errors").text("");
 							var errorTemplate = $("#errorTemplate").html();
 							var template = Handlebars.compile(errorTemplate);

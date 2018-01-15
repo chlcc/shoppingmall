@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.sup2is.form.BoardForm;
 import org.sup2is.model.Board;
 import org.sup2is.repository.BoardRepository;
@@ -27,8 +28,8 @@ public class BoardServliceImpl implements BoardService{
 	@Transactional
 	public void write(BoardForm form) throws Exception {
 		boardRepository.create(form);
-		if(form.getFilenames().size() != 0 && form.getFilenames() != null) {
-			
+		
+		if(!ObjectUtils.isEmpty(form.getFilenames())) {
 			Map<String, Object> param = new HashMap<>();
 			param.put("list", form.getFilenames());
 			fileRepository.setFileBno(param);
@@ -60,15 +61,20 @@ public class BoardServliceImpl implements BoardService{
 	}
 
 	@Override
+	@Transactional
 	public void modify(Board board) {
 		boardRepository.modify(board);
+		if(!ObjectUtils.isEmpty(board.getFilenames())) {
+			Map<String, Object> param = new HashMap<>();
+			param.put("list", board.getFilenames());
+			fileRepository.setFileBno(param);
+		}
 	}
 
 	@Override
 	public int setInvisibleBoard(int bno) {
 		return boardRepository.setInvisibleBoard(bno);
 	}
-
 
 	
 }

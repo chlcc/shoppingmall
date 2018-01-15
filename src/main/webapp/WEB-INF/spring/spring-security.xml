@@ -20,6 +20,7 @@
         <intercept-url pattern="/board/write" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/login" access="isAnonymous()"/>
+        <intercept-url pattern="/join" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="permitAll" />
         
         <form-login

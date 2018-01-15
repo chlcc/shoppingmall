@@ -1,7 +1,6 @@
 package org.sup2is.valid;
 
 import java.util.regex.Matcher;
-
 import java.util.regex.Pattern;
 
 import javax.validation.ConstraintValidator;
@@ -9,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PasswordValidator implements ConstraintValidator<Password, String> {
 
-	private static String passwordRule = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}";
+	private String passwordRule = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}";
 	
 	@Override
 	public void initialize(Password password) {

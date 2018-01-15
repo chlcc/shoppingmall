@@ -72,13 +72,13 @@
 		
 		if (typeof (execAttach) == 'undefined') { //Virtual Function
 			return;
-		}
+		} 
 		
 		var _mockdata = {
 			'imageurl' : jsonObj.fileInfo.url,
 			'filename' : jsonObj.fileInfo.fileName,
 			'filesize' : jsonObj.fileInfo.fileSize,
-			'imagealign' : 'C',
+			'imagealign' : 'L',
 			'originalurl' : jsonObj.fileInfo.originalurl,
 			'thumburl' : jsonObj.fileInfo.url
 		};

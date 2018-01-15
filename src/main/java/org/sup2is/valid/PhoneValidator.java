@@ -6,11 +6,9 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.sup2is.form.UserInfoForm;
-
 public class PhoneValidator implements ConstraintValidator<Phone, String> {
 
-	private static String phoneRule = "^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$";
+	private String phoneRule = "^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$";
 	
 	@Override
 	public void initialize(Phone phone) {

@@ -16,7 +16,13 @@
                             </div>	
                             <div class="landing-text wow fadeInLeft">
                                 <p>Backyard is a modern and customizable landing page template designed to increase conversion of your product. Backyard is flexible to suit any kind of your business. Try now and join with our happy customers!</p>
-                            </div>						
+                            </div>
+                            <div class="landing-text wow fadeInLeft">
+                                <p>Backyard is a modern and customizable landing page template designed to increase conversion of your product. Backyard is flexible to suit any kind of your business. Try now and join with our happy customers!</p>
+                            </div>
+                            <div class="landing-text wow fadeInLeft">
+                                <p>Backyard is a modern and customizable landing page template designed to increase conversion of your product. Backyard is flexible to suit any kind of your business. Try now and join with our happy customers!</p>
+                            </div> 
                     </div>
                       <div class="col-md-6 intro-pic">
                         <h1 >
@@ -145,7 +151,7 @@
 				var pop = window.open("/jusoPopup","pop","width=570,height=500, scrollbars=yes, resizable=yes"); 
 			}
 			function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
-					$("#address").val(roadAddrPart1);
+				$("#address").val(roadAddrPart1);
 					$("#address_detailed").val(addrDetail);
 			}
 			

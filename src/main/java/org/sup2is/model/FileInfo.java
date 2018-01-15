@@ -18,7 +18,6 @@ public class FileInfo {
 		
 	}
 	
-	
 	public FileInfo(String fileName , String originalName, long fileSize , String url , String originalUrl) {
 		this.fileName = fileName;
 		this.originalName = originalName;

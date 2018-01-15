@@ -124,6 +124,10 @@
 	<div class="text-center">
 	</div>
 	
+	<form id="filenameForm">
+ 	
+	</form>
+	
 	
 <div class="modal fade" id="deleteCheckModal" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -156,7 +160,7 @@
 	</script>
 	<script id="replyTemplate" type="text/x-handlebars-template">
 
- 	 {{#replyList}} 
+ 	 {{#param}} 
 	 <li class="media">
      <a class="pull-left" href="#">
      <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
@@ -177,12 +181,12 @@
 			{{#isAuth}} 
 			<a class="btn btn-success btn-circle text-uppercase" data-toggle="collapse" onclick="modReply({{rno}})"><i class="fa fa-pencil" aria-hidden="true"></i></span>modify</a>
 		    <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="delReply({{rno}});"><i class="fa fa-trash-o" aria-hidden="true"></i></span>delete</a>
-			{{/isAuth}}
+			{{/isAuth}} 
 			</div>  
      		</div> 
      	</div> 
      </li>     
- 	 {{/replyList}} 
+ 	 {{/param}} 
 	</script> 
 
 	<script type="text/javascript">
@@ -216,7 +220,7 @@
 				data : JSON.stringify(data),
 				success : function (data) {
 					var fieldError = data.fieldError;
-					if(data.fieldError !== undefined) {
+					if(!(Object.keys(fieldError).length === 0)) {
 						data.fieldError.forEach(function (value) {
 							alert(value);
 						}); 
@@ -292,14 +296,25 @@
 					content : $("#daumTextEdit").val(),
 					category : category
 			};
+
+			var filenames = []; 
+			
+			$("input[class=filename]").each(function(i , value){
+				filenames[i] = value.getAttribute('value');
+			});
+			
+			data.filenames = filenames;
+			
+			console.log(data);
 			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/board/" + bno,
 				method : 'put',
 				data : JSON.stringify(data),
 				contentType : 'application/json;charset=utf-8',
-				success : function (data) {
-				  	if(data.fieldError != null) {
+				success : function (data) { 
+					var fieldError = data.fieldError;
+				  	if(!(Object.keys(fieldError).length === 0)) { 
 						$("#errors").text("");
 						var errorTemplate = $("#errorTemplate").html();
 						var template = Handlebars.compile(errorTemplate);
@@ -308,7 +323,7 @@
 						return;
 				  	}
 					if(data.result != null && data.result == "success") {
-						location.href = "${pageContext.request.contextPath}/board/" + bno
+						location.href = "${pageContext.request.contextPath}/board/" + bno 
 					}
 				} , 
 				error : function (data) {
@@ -336,7 +351,7 @@
 				}
 			});
 			
-			loadContent('${fileList}');
+			loadContent();
 			
 			
 			$("#delBtn").attr("hidden" , true);
@@ -364,7 +379,7 @@
 				contentType : 'application/json;charset=utf-8',
 				success : function (data) {
 					var fieldError = data.fieldError;
-					if(data.fieldError !== undefined) {
+					if(!(Object.keys(fieldError).length === 0)) {
 						data.fieldError.forEach(function (value) {
 							alert(value);
 						}); 
@@ -384,17 +399,18 @@
 				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
 				method : 'get',
 				success : function (data) {
+					console.log(data);
 					$("#replyUl").text(""); 
 					var replyTemplate = $("#replyTemplate").html();
 					var template = Handlebars.compile(replyTemplate);
-					var html = template(data);
+					var html = template(data);  
 					$("#replyUl").append(html);
 				} , 
 				error : function (data) {
 					console.log(data); 
-				}
-			});
-		}
+				} 
+			}); 
+		} 
 		
 		function setInvisibleBoard(bno) {
 			$("#deleteCheckModal").modal('hide');
@@ -478,36 +494,39 @@
 			data : { bno : '${board.bno}'},
 			dataType : 'json', 
 			success : function (data) {
-				
-				
 				var fileList = data.fileList;
-				
-				var attachments = {};
-				attachments['image'] = [];
-				  
-			 	for(var i = 0; i < fileList.length; i++) {
-			 		attachments['image'].push({
-						'attacher': 'image',
-						'data': { 
-							'imageurl': fileList[i].url,
-							'filename': fileList[i].fileName, 
-							'filesize': fileList[i].fileSize, 
-							'originalurl': fileList[i].originalUrl, 
-							'thumburl': fileList[i].originalUrl
-						}
-					});
-			 		Editor.modify({
-						"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
-							var allattachments = [];
-							for (var i in attachments) {
-								allattachments = allattachments.concat(attachments[i]);
+				if(!(Object.keys(fileList).length === 0) ){
+					var attachments = {};
+					attachments['image'] = [];
+					  
+				 	for(var i = 0; i < fileList.length; i++) {
+				 		attachments['image'].push({
+							'attacher': 'image',
+							'data': { 
+								'imageurl': fileList[i].url,
+								'filename': fileList[i].fileName, 
+								'filesize': fileList[i].fileSize, 
+								'originalurl': fileList[i].originalUrl, 
+								'thumburl': fileList[i].originalUrl
 							}
-							return allattachments;
-						}(),
+						});
+				 		Editor.modify({
+							"attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+								var allattachments = [];
+								for (var i in attachments) { 
+									allattachments = allattachments.concat(attachments[i]);
+								}
+								return allattachments;
+							}(),
+							"content": document.getElementById("daumTextEdit") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+						});
+					}  
+	
+				}else {
+					Editor.modify({
 						"content": document.getElementById("daumTextEdit") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
 					});
-				}  
-				
+				}
 				
 			}, 
 		});

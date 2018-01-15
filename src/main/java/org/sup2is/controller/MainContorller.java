@@ -110,6 +110,11 @@ public class MainContorller extends BaseController {
 		
 		return jsonObj;
 	}
+	
+	@RequestMapping("jusoPopup")
+	public String jusoPopup() {
+		return "openAPI/jusoPopup";
+	}
 }
 
 

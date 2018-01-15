@@ -2,17 +2,14 @@ package org.sup2is.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +25,7 @@ import org.sup2is.model.Board;
 import org.sup2is.model.User;
 import org.sup2is.service.BoardService;
 import org.sup2is.service.UserService;
+import org.sup2is.util.JsonObject;
 import org.sup2is.util.PageNavigation;
 
 @Controller
@@ -39,9 +37,6 @@ public class BoardController extends BaseController {
 
 	@Autowired
 	private BoardService boardService;
-	
-	@Autowired
-	private MessageSource message;
 	
 	@Autowired
 	private UserService userService;
@@ -59,10 +54,31 @@ public class BoardController extends BaseController {
 	
 	@RequestMapping(value = "" , method = RequestMethod.POST)
 	@ResponseBody
+	public JsonObject create(@Valid @RequestBody BoardForm form, BindingResult bindingResult) {		
+		
+		if(bindingResult.hasErrors()) {
+			List<String> fieldErrors = new ArrayList<>();
+			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+				fieldErrors.add(message.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.getDefault()));
+			}
+			
+			return JsonObject.create(fieldErrors);
+		}
+		
+		try {
+			boardService.write(form);
+			return JsonObject.create();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonObject.create(e);
+		}
+	}
+	
+/*	@RequestMapping(value = "" , method = RequestMethod.POST)
+	@ResponseBody
 	public Map<String,Object> create(@Valid @RequestBody BoardForm form, BindingResult bindingResult) {		
 		
 		Map<String,Object> jsonObj = new HashMap<>();
-		
 		
 		if(bindingResult.hasErrors()) {
 			List<FieldError> errors = bindingResult.getFieldErrors();
@@ -79,7 +95,7 @@ public class BoardController extends BaseController {
 			logger.error(e.getMessage());
 		}
 		return jsonObj;
-	}
+	}*/
 	
 	/*@RequestMapping(value = "/list/{page}")
 	@ResponseBody
@@ -126,54 +142,43 @@ public class BoardController extends BaseController {
 	
 	@RequestMapping(value = "/{bno}" , method = RequestMethod.PUT)
 	@ResponseBody
-	public Map<String, Object> modify(@RequestBody @Valid BoardForm form, BindingResult bindingResult
+	public JsonObject modify(@RequestBody @Valid BoardForm form, BindingResult bindingResult
 			, @PathVariable("bno")int bno) throws Exception {
-		
-		Map<String, Object> jsonObj = new HashMap<>();
 		Board board = boardService.readOne(bno);
 		
 		if(bindingResult.hasErrors()) {
-			List<FieldError> errors = bindingResult.getFieldErrors();
-			List<String> fieldError = new ArrayList<>(); 
-			for(FieldError error : errors) {
-				fieldError.add(message.getMessage(error.getCode(), error.getArguments(), Locale.getDefault()));
+			List<String> fieldErrors = new ArrayList<>(); 
+			for(FieldError fieldError : bindingResult.getFieldErrors()) {
+				fieldErrors.add(message.getMessage(fieldError.getCode(), fieldError.getArguments(), Locale.getDefault()));
 			}
-			jsonObj.put("fieldError", fieldError);
-			return jsonObj;
+			return JsonObject.create(fieldErrors);
 		}
 		
 		board.setTitle(form.getTitle());
 		board.setContent(form.getContent());
+		board.setFilenames(form.getFilenames());
 		
 		try {
 			boardService.modify(board);
+			return JsonObject.create();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
-			jsonObj.put("error", e);
-			return jsonObj;
+			return JsonObject.create(e);
 		}
-		
-		jsonObj.put("result", "success");
-		return jsonObj;
 	}
 	
 	@RequestMapping(value = "/{bno}" , method = RequestMethod.DELETE)
 	@ResponseBody
-	public Map<String, Object> delete(@PathVariable("bno")int bno) throws Exception {
-		
-		Map<String, Object> jsonObj = new HashMap<>();
+	public JsonObject delete(@PathVariable("bno")int bno) throws Exception {
 		boardService.readOne(bno);
-		
 		try {
 			boardService.setInvisibleBoard(bno);
+			return JsonObject.create();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
-			jsonObj.put("error", e);
-			return jsonObj;
+			return JsonObject.create(e);
 		}
 		
-		jsonObj.put("result", "success");
-		return jsonObj;
 	}
 	
 }

@@ -4,13 +4,61 @@ CREATE TABLE `user` (
   `userName` varchar(45) NOT NULL,
   `phone` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `authorization` enum('USER','ADMIN') DEFAULT 'USER',
   `address` varchar(100) NOT NULL,
   `address_detailed` varchar(45) NOT NULL,
   `point` int(11) DEFAULT '0',
   `grade` enum('BRONZE','SILVER','GOLD','VIP') DEFAULT 'BRONZE',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `reply` (
+  `rno` int(11) NOT NULL AUTO_INCREMENT,
+  `bno` int(11) NOT NULL,
+  `userId` varchar(45) NOT NULL,
+  `content` varchar(45) NOT NULL,
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `display` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`rno`),
+  KEY `bno` (`bno`),
+  CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `board` (
+  `bno` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` varchar(45) NOT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `category` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `content` text NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `viewCnt` varchar(45) DEFAULT '0',
+  `anonymous` tinyint(1) DEFAULT '0',
+  `display` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`bno`)
+) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `authorities` (
+  `userId` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL DEFAULT 'ROLE_USER',
+  KEY `fk_username` (`userId`),
+  CONSTRAINT `fk_username` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `attachfile` (
+  `fileName` varchar(45) NOT NULL,
+  `bno` int(11) DEFAULT NULL,
+  `originalName` varchar(45) NOT NULL,
+  `fileSize` int(11) NOT NULL,
+  `url` varchar(250) NOT NULL,
+  `originalUrl` varchar(250) NOT NULL,
+  PRIMARY KEY (`fileName`),
+  KEY `attach_file_ibfk_1` (`bno`),
+  CONSTRAINT `attachfile_ibfk_1` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
