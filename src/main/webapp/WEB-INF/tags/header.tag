@@ -6,9 +6,12 @@
  <header>
 	<!-- NAVIGATION -->
 	<div id="menu">
-	    <nav class="navbar-wrapper navbar-default" role="navigation">
+	    <nav class="navbar-wrapper navbar-default" role="navigation">  
 	        <div class="container"> 
-	            <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right">
+	        	<sec:authorize access="hasRole('ROLE_ADMIN')">
+	            	<h3 style="display: inline-block; margin-top: 10px;">ADMIN</h3>
+	        	</sec:authorize>  
+	            <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right"> 
 	                <ul class="nav navbar-nav">
 	                    <li><a href="${pagecontext.request.contextpath}/board/list/1">Q&amp;A</a></li>
 	                    
@@ -22,6 +25,7 @@
 	                    </sec:authorize>
 	                    <sec:authorize access="hasRole('ROLE_ADMIN')">
 	                    	<li><a href="${pagecontext.request.contextpath}/admin">admin</a>
+	                    	<li><a href="${pagecontext.request.contextpath}/logout">logout</a></li>
 	                    </sec:authorize>
 	                </ul>
 	            </div>

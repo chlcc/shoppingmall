@@ -1,10 +1,8 @@
 package org.sup2is.controller;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -29,6 +27,7 @@ import org.sup2is.form.LoginForm;
 import org.sup2is.form.UserInfoForm;
 import org.sup2is.model.User;
 import org.sup2is.service.UserService;
+import org.sup2is.util.JsonObject;
 
 @Controller
 public class MainContorller extends BaseController {
@@ -56,7 +55,7 @@ public class MainContorller extends BaseController {
 		request.getSession().setAttribute("prevPage", referer);
 		
 		if(error != null) {
-			bindingResult.addError(new FieldError("loginForm", "password", message.getMessage("invalid.access", null, Locale.getDefault())));
+			bindingResult.addError(new FieldError("loginForm", "password", message.getMessage("invalid.login", null, Locale.getDefault())));
 		}
 		
 		return "/login";
@@ -99,17 +98,15 @@ public class MainContorller extends BaseController {
 	
 	@RequestMapping("getCurrentUser")
 	@ResponseBody
-	public Map<String, Object> getCurrentUser(Principal principal) throws Exception {
+	public JsonObject getCurrentUser(Principal principal) throws Exception {
 		
-		Map<String, Object> jsonObj = new HashMap<>();
 		
 		if(principal != null) {
 			User user = userService.findByUserId(principal.getName());
-			jsonObj.put("user", user);
+			return JsonObject.create(user); 
 		}
-		
-		return jsonObj;
-	}
+		return JsonObject.create();
+		}
 	
 	@RequestMapping("jusoPopup")
 	public String jusoPopup() {

@@ -47,13 +47,22 @@
 				</tbody>
 				<tfoot>
 				<tr>
-					<td id="btnList" colspan="2">
-						<input type="button" class="btn-default" id="listBtn" style="font-weight: bold;" value="List"></input>
-						<c:if test="${user != null && user.userId eq board.userId}">
+					<sec:authorize access="hasRole('ROLE_USER')">
+						<td id="btnList" colspan="2">
+							<input type="button" class="btn-default" id="listBtn" style="font-weight: bold;" value="List"></input>
+							<c:if test="${user != null && user.userId eq board.userId}">
+								<input type="button" id="modBtn" class="btn-default" style="font-weight: bold;" value="Modify"></input>
+								<input type="button" id="delBtn" class="btn-default" style="font-weight: bold;" value="Delete"></input>
+							</c:if>			
+						</td> 
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<td id="btnList" colspan="2">
+							<input type="button" class="btn-default" id="listBtn" style="font-weight: bold;" value="List"></input>
 							<input type="button" id="modBtn" class="btn-default" style="font-weight: bold;" value="Modify"></input>
 							<input type="button" id="delBtn" class="btn-default" style="font-weight: bold;" value="Delete"></input>
-						</c:if>			
-					</td> 
+						</td> 
+					</sec:authorize>
 				</tr>
 				</tfoot>
 			</table>
@@ -86,9 +95,9 @@
 					</tr>
 				</sec:authorize>
 				
-				<sec:authorize access="hasRole('ROLE_USER')">
+				<sec:authorize access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"> 
 					<div class="row">
-		       			<div class="comment-tabs">
+		       			<div class="comment-tabs"> 
 							<div class="tab-content">
 								<div class="tab-pane active">  
 									<ul class="media-list">
@@ -98,8 +107,10 @@
 						                </a>
 							                <div class="media-body">
 								                <div class="well well-lg">
-								                <h4 class="media-heading reviews">${user.userId}</h4>
-								                <p class="media-comment" > 
+								                <h4 class="media-heading reviews">
+								             	   ${user.userId}<sec:authorize access="hasAnyRole('ROLE_ADMIN')">(ADMIN)</sec:authorize>
+								                </h4> 
+								                <p class="media-comment" >
 								               	 <textarea class="form-control" id="replyContent" rows="5"></textarea>
 								                </p>
 								                <a class="btn btn-success btn-circle text-uppercase" id="replyBtn" data-toggle="collapse"><span class="glyphicon glyphicon-comment"></span> submit</a>
@@ -142,9 +153,6 @@
     </div>
   </div>
 </div>
-<c:if test="${user.userId}">
-	라라랄랄
-</c:if>
 
 
 	<script id="errorTemplate" type="text/x-handlebars-template">
@@ -210,7 +218,6 @@
 					userId : '${user.userId}',
 					content : content
 			}
-			console.log(data); 
 			 
 			$.ajax({
 				url : "${pageContext.request.contextPath}/reply/" + rno,
@@ -371,7 +378,7 @@
 					userId : '${user.userId}',
 					content : content
 			}
-			console.log(data);
+			
 			 $.ajax({
 				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
 				method : 'post',
@@ -384,7 +391,8 @@
 							alert(value);
 						}); 
 						return;
-					} 
+					}
+					$("#replyContent").val(""); 
 				  	replyList();
 				} , 
 				error : function (data) {

@@ -68,19 +68,20 @@
 <script type="text/javascript">
 	// <![CDATA[
 
-	function done(jsonObj) {
+	function done(fileInfo) {
+		
 		
 		if (typeof (execAttach) == 'undefined') { //Virtual Function
 			return;
 		} 
-		
+		 
 		var _mockdata = {
-			'imageurl' : jsonObj.fileInfo.url,
-			'filename' : jsonObj.fileInfo.fileName,
-			'filesize' : jsonObj.fileInfo.fileSize,
+			'imageurl' : fileInfo.url, 
+			'filename' : fileInfo.fileName,
+			'filesize' : fileInfo.fileSize,
 			'imagealign' : 'L',
-			'originalurl' : jsonObj.fileInfo.originalurl,
-			'thumburl' : jsonObj.fileInfo.url
+			'originalurl' : fileInfo.originalurl,
+			'thumburl' : fileInfo.url
 		};
 		
 		execAttach(_mockdata);
@@ -151,15 +152,11 @@
 				dataType :'json',
 				processData : false,
 				contentType : false,
-				success : function (jsonObj) {
-					if(jsonObj.result != null) {
-						alert(jsonObj.result);
-					}else {
-						
-						$(opener.document).find("#filenameForm").append("<input type='hidden' class='filename' value='"+ jsonObj.fileInfo.fileName+"'>");
-						done(jsonObj);
-					}
-					
+				success : function (data) {
+					var fileInfo = data.param;
+					$(opener.document).find("#filenameForm").append("<input type='hidden' class='filename' value='"+ fileInfo.fileName+"'>");
+					done(fileInfo);
+					 
 				},
 				error : function(data) {
 					console.log(data)

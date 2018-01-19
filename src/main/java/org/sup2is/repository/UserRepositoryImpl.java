@@ -41,4 +41,12 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 
+
+
+	@Override
+	public void modify(User user) {
+		sqlSessionTemplate.update(namespace + "modify" , user);
+	}
+
+
 }

@@ -54,8 +54,7 @@
 			<c:if test="${pageNavigation.startPage != 1}">
 				<li><a href="/board/list/${pageNavigation.startPage - 1}">&lt;</a></li>
 			</c:if>
-			<c:forEach var="pageNum" begin="${pageNavigation.startPage}"
-				end="${pageNavigation.endPage}">
+			<c:forEach var="pageNum" begin="${pageNavigation.startPage}" end="${pageNavigation.endPage}">
 				<li><a href="/board/list/${pageNum}">${pageNum}</a></li>
 			</c:forEach>
 			<c:if test="${pageNavigation.endPage <  pageNavigation.totalPage}">

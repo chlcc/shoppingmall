@@ -24,7 +24,7 @@ public class UserInfoForm {
 	@NotEmpty
 	@Size(min = 2, max = 12)
 	private String userName;
-
+	
 	@NotEmpty
 	@Phone
 	private String phone;

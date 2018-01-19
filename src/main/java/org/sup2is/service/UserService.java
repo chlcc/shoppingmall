@@ -8,6 +8,8 @@ public interface UserService{
 	void join(UserInfoForm form) throws Exception;
 
 	User findByUserId(String userId) throws Exception;
+
+	void modify(User user);
 	
 	
 }

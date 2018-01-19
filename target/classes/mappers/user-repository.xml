@@ -17,4 +17,10 @@
 		INSERT INTO authorities (userId,role)
 		VALUES (#{userId}, 'ROLE_USER')
 	</insert>
+	
+	<update id="modify" parameterType="org.sup2is.model.User">
+		UPDATE user
+		  SET address = #{address} , address_detailed = #{address_detailed} , phone = #{phone} , email = #{email}
+		WHERE userId = #{userId}
+	</update>
 </mapper>

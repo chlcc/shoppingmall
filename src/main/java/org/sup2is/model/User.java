@@ -12,6 +12,8 @@ public class User {
 	private String userName;
 	private String phone;
 	private String email;
+	private String address;
+	private String address_detailed;
 	private int enabled;
 	private Date create_at;
 	private int point;

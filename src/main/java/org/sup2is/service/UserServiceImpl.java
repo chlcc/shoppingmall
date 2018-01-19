@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService{
 		return userRepository.findByUserId(userId);
 	}
 
+	@Override
+	public void modify(User user) {
+		userRepository.modify(user);
+	}
+
 }

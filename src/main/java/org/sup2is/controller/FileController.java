@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -23,10 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.sup2is.model.FileInfo;
 import org.sup2is.service.FileService;
+import org.sup2is.util.JsonObject;
 
 @Controller
 @RequestMapping("file")
-public class FileController {
+public class FileController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(FileController.class);
 	
@@ -35,14 +37,13 @@ public class FileController {
 	
 	@RequestMapping( value ="/singleUploadImageAjax" , method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> singleUploadImageAjax(MultipartHttpServletRequest multipartRequest) {
+	public JsonObject singleUploadImageAjax(MultipartHttpServletRequest multipartRequest) {
 		
-		Map<String, Object> jsonObj = new HashMap<>();
 		
 		Iterator<String> files = multipartRequest.getFileNames();
 		String imageRex = "jpe?g|png|gif|bmp";
 		
-		while(files.hasNext()) {
+		if(files.hasNext()) {
 			
 		    String uploadFile = files.next();
             MultipartFile mFile = multipartRequest.getFile(uploadFile);
@@ -53,15 +54,13 @@ public class FileController {
 			Matcher matcher = pattern.matcher(originalNameExtension);
 			
 			if(!matcher.find()) {
-				jsonObj.put("result", "파일 형식이 맞지 않습니다.");
-				break;
+				return JsonObject.create(message.getMessage("invalid.fileType", null, Locale.getDefault()));
 			}
 				
 			long fileSize = mFile.getSize();
 			long limitFileSize = 1*1024*1024;
 			if(limitFileSize < fileSize) {
-				jsonObj.put("result", "파일 크기가 1메가 이상입니다.");
-				break;
+				return JsonObject.create(message.getMessage("invalid.fileSize", null, Locale.getDefault()));
 			}
 			
 			String defaultPath = multipartRequest.getServletContext().getRealPath("/");
@@ -77,23 +76,25 @@ public class FileController {
 			String today = dateFormat.format(new Date());
 			String modifyName = today + "-" + UUID.randomUUID().toString().substring(20) + "." +originalNameExtension;
 			
-			
 			String imageurl = multipartRequest.getServletContext().getContextPath() + "/upload/board/images/" + modifyName; 
 			
 			FileInfo fileInfo = new FileInfo(modifyName, originalName, fileSize, imageurl, imageurl);
 				
-			jsonObj.put("fileInfo", fileInfo);
 			
             try {
             	
             	mFile.transferTo(new File(path+modifyName));
             	fileService.insertFile(fileInfo);
+            	return JsonObject.create(fileInfo);
             } catch (Exception e) {
-                e.printStackTrace();
+            	logger.error(e.getMessage());
+            	return JsonObject.create(e);
+            	
             }
+		}else {
+			return JsonObject.create(message.getMessage("invalid.fileNotFound", null, Locale.getDefault()));
 		}
 		
-		return jsonObj;
 		
 	}
 	

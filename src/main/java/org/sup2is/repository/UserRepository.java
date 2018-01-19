@@ -11,6 +11,7 @@ public interface UserRepository {
 	User findByUserId(String userId) throws Exception;
 
 	void setAuthority(String userId);
-	
+
+	void modify(User user);
 	
 }

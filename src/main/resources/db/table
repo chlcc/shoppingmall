@@ -6,12 +6,13 @@ CREATE TABLE `user` (
   `email` varchar(45) NOT NULL,
   `address` varchar(100) NOT NULL,
   `address_detailed` varchar(45) NOT NULL,
-  `point` int(11) DEFAULT '0',
+  `point` int(11) DEFAULT '1000',
   `grade` enum('BRONZE','SILVER','GOLD','VIP') DEFAULT 'BRONZE',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 CREATE TABLE `reply` (

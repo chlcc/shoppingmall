@@ -11,6 +11,7 @@
 	<select id="totalCount" resultType="Integer">
 		SELECT COUNT(*)
 	  	  FROM board
+	  	WHERE display = 1
 	</select>
 	
 	<select id="listPage" parameterType="org.sup2is.util.PageNavigation" resultType="org.sup2is.model.Board">

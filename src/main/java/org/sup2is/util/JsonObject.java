@@ -37,6 +37,10 @@ public class JsonObject extends HashMap<String, Object>{
 	public JsonObject(Exception e) {
 		this(Result.failed , e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
 	}
+	
+	public JsonObject(String reason) {
+		this(Result.failed, reason);
+	}
 
 /*	public JsonObject(BindingResult bindingResult) {
 		this(bindingResult.hasErrors() ? Result.failed : Result.success , null, bindingResult);
@@ -69,7 +73,7 @@ public class JsonObject extends HashMap<String, Object>{
 		if(!ObjectUtils.isEmpty(fieldErrors)) {
 			setFieldErrors(fieldErrors);
 		}
-	}
+	} 
 
 	private void setParam(Object param) {
 		put(KEY_PARAM, param);
@@ -91,6 +95,10 @@ public class JsonObject extends HashMap<String, Object>{
 		result.setParam(param);
 		return result;
 	}
+	public static JsonObject create(String reason) {
+		return new JsonObject(reason);
+	}
+	
 	
 	public static JsonObject create(List<String> fieldErrors) {
 		return new JsonObject(fieldErrors);
