@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.sup2is.mapper.AdminRepository">
+
+	<insert id="addGoods" parameterType="org.sup2is.form.GoodsForm">
+		INSERT INTO goods (name,category,price,content)
+		VALUES (#{name},#{category},#{price},#{content})
+	</insert>
+	
+	<insert id="addGoodsInfo" parameterType="java.util.Map">
+			INSERT INTO goods_info (gno,color,count)
+			VALUES
+			  <foreach item="value" index="key" collection="_parameter.entrySet()" separator=",">
+				  	(LAST_INSERT_ID(), '${key}' , #{value})
+		     </foreach>
+	</insert>
+	
+</mapper>

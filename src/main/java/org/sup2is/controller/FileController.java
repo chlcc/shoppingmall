@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,9 +36,9 @@ public class FileController extends BaseController {
 	@Autowired
 	private FileService fileService;
 	
-	@RequestMapping( value ="/singleUploadImageAjax" , method = RequestMethod.POST)
+	@RequestMapping( value ="/singleUploadImageAjax/{category}" , method = RequestMethod.POST)
 	@ResponseBody
-	public JsonObject singleUploadImageAjax(MultipartHttpServletRequest multipartRequest) {
+	public JsonObject singleUploadImageAjax(MultipartHttpServletRequest multipartRequest ,@PathVariable("category") String category) {
 		
 		
 		Iterator<String> files = multipartRequest.getFileNames();
@@ -65,24 +66,22 @@ public class FileController extends BaseController {
 			
 			String defaultPath = multipartRequest.getServletContext().getRealPath("/");
 			logger.info(defaultPath);
-			String path = defaultPath + File.separator + "upload" + File.separator + "board" + File.separator + "images" + File.separator + "";
+			String path = defaultPath + File.separator + "upload" + File.separator + category + File.separator + "images" + File.separator + "";
 			
 			File file = new File(path);
 			if(!file.exists()) {
-				file.mkdir();
+				file.mkdirs();
 			}
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 			String today = dateFormat.format(new Date());
 			String modifyName = today + "-" + UUID.randomUUID().toString().substring(20) + "." +originalNameExtension;
 			
-			String imageurl = multipartRequest.getServletContext().getContextPath() + "/upload/board/images/" + modifyName; 
+			String imageurl = multipartRequest.getServletContext().getContextPath() + "/upload/" + category+ "/images/" + modifyName; 
 			
-			FileInfo fileInfo = new FileInfo(modifyName, originalName, fileSize, imageurl, imageurl);
+			FileInfo fileInfo = new FileInfo(modifyName, originalName, fileSize, imageurl, imageurl , category);
 				
-			
             try {
-            	
             	mFile.transferTo(new File(path+modifyName));
             	fileService.insertFile(fileInfo);
             	return JsonObject.create(fileInfo);

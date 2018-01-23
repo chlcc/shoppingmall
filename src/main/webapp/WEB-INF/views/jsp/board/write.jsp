@@ -18,7 +18,7 @@
             	QnA
             	
 	              <form:form commandName="boardForm">
-		              <table class="table table-striped table-hover">
+		              <table class="table"> 
 		              <thead>
 		              <tr>
 		              	<th width="10%;"> 

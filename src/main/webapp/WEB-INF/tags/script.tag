@@ -7,5 +7,6 @@
   <script src="/resources/js/jquery-bind.js"></script>
   <script src="/resources/js/handlebars-v4.0.11.js"></script>
   <script src="/resources/js/swiper.min.js"></script>
+  <script src="/resources/js/bootstrap-number-input.js"></script>
   
  

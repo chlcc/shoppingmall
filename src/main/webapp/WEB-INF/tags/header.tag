@@ -18,13 +18,14 @@
 	                    <sec:authorize access="hasRole('ROLE_USER')">
 	                   		<li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>
 	                   		<li><a href="${pagecontext.request.contextpath}/logout">logout</a></li>
-	                    </sec:authorize>
+	                    </sec:authorize> 
                			<sec:authorize access="isAnonymous()">
 		                    <li><a href="${pagecontext.request.contextpath}/join">join us</a></li>
 		                    <li><a href="${pagecontext.request.contextpath}/login">login</a></li>
 	                    </sec:authorize>
 	                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-	                    	<li><a href="${pagecontext.request.contextpath}/admin">admin</a>
+	                    	<li><a href="${pagecontext.request.contextpath}/admin/dashboard">admin</a>
+		                    <li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>
 	                    	<li><a href="${pagecontext.request.contextpath}/logout">logout</a></li>
 	                    </sec:authorize>
 	                </ul>

@@ -10,14 +10,8 @@
 
 .swiper-container {
     width: 100%;  
-    height: 800px; 
+    height: 600px;
 }
-.swiper-slide img{
-position: absolute; top:0; left: 0;
-width: 100%; 
-height: 100%;
-}
-
 </style>
 
 
@@ -27,9 +21,9 @@ height: 100%;
 		    <!-- Additional required wrapper -->
 		    <div class="swiper-wrapper">
 		        <!-- Slides -->
-		        <div class="swiper-slide"><img src="/resources/images/back1.jpg"></div>
-		        <div class="swiper-slide"><img src="/resources/images/back2.jpg"></div> 
-		        <div class="swiper-slide"><img src="/resources/images/back3.jpg"></div> 
+		        <div class="swiper-slide" style="background-color: #aaa">Design Binary</div>
+		        <div class="swiper-slide" style="background-color: #bbb">Design Binary</div>
+		        <div class="swiper-slide" style="background-color: #ccc">Design Binary</div> 
 		    </div>
 		    <!-- If we need pagination -->
 		    <div class="swiper-pagination"></div>
@@ -64,7 +58,7 @@ height: 100%;
 	    },
 	    
 	    autoplay: {
-	        delay: 3000
+	        delay: 3000, 
 	      },
 	  })
   </script>

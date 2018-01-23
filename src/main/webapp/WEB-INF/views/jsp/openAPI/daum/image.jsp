@@ -69,8 +69,8 @@
 	// <![CDATA[
 
 	function done(fileInfo) {
-		
-		
+		 
+		console.log(fileInfo);
 		if (typeof (execAttach) == 'undefined') { //Virtual Function
 			return;
 		} 
@@ -93,7 +93,7 @@
 		var _opener = PopupUtil.getOpener();
 		if (!_opener) {
 			alert('잘못된 경로로 접근하셨습니다.');
-			return;
+			return; 
 		}
 
 		var _attacher = getAttacher('image', _opener);
@@ -143,19 +143,30 @@
 	
 		$("#submitBtn").click(function () {
 			
+			var urlpath = opener.location.pathname
+			
+			var accessUrl = urlpath.substring(urlpath.indexOf("/") + 1, urlpath.lastIndexOf("/"));
+			  
+			 
+			console.log(accessUrl); 
+			  
+			 
+			  
 			var formData = new FormData($("#daumImageForm")[0]);
 			
 		 	$.ajax({
-				url : "${pageContext.request.contextPath}/file/singleUploadImageAjax",
+				url : "${pageContext.request.contextPath}/file/singleUploadImageAjax/" + accessUrl,
 				type : 'post' ,
 				data : formData,
 				dataType :'json',
 				processData : false,
 				contentType : false,
 				success : function (data) {
-					var fileInfo = data.param;
+					var fileInfo = data.param; 
+					
+					console.log(fileInfo);
 					$(opener.document).find("#filenameForm").append("<input type='hidden' class='filename' value='"+ fileInfo.fileName+"'>");
-					done(fileInfo);
+					done(fileInfo); 
 					 
 				},
 				error : function(data) {
@@ -166,6 +177,7 @@
 		});
 	});
 	</script>
+	
 	
 </body>
 </html>

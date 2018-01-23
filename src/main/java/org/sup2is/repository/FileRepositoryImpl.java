@@ -22,8 +22,8 @@ public class FileRepositoryImpl implements FileRepository{
 	}
 
 	@Override
-	public void setFileBno(Map<String, Object> filenames) {
-		sqlSessionTemplate.update(namespace + "setFileBno" , filenames);
+	public void setFileRno(Map<String, Object> filenames) {
+		sqlSessionTemplate.update(namespace + "setFileRno" , filenames);
 	}
 
 	@Override

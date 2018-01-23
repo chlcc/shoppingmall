@@ -12,9 +12,9 @@
                          <li><a href="/shop/new">NEW</a></li>
                          <li><a href="/shop/best">BEST</a></li>
                          <li><a href="/shop/sale">SALE</a></li>
-                         <li><a href="/shop/top">top</a></li>
-                         <li><a href="/shop/bottom">bottom</a></li>
-                         <li><a href="/shop/outer">outer</a></li>
+                         <li><a href="/shop/living room">top</a></li>
+                         <li><a href="/shop/kitchen">bottom</a></li>
+                         <li><a href="/shop/kids">outer</a></li>
                          <li><a href="/shop/acc">acc</a></li>
                      </ul>
                  </div>

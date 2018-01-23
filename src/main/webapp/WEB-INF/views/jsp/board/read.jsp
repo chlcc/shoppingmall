@@ -103,11 +103,11 @@
 									<ul class="media-list">
 						 				<li class="media"> 
 						                <a class="pull-left" href="#">
-						                <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+						                <img class="media-object img-circle" src="/resources/images/unknown_user.png" alt="profile">
 						                </a>
 							                <div class="media-body">
 								                <div class="well well-lg">
-								                <h4 class="media-heading reviews">
+								                <h4 class="media-heading reviews"> 
 								             	   ${user.userId}<sec:authorize access="hasAnyRole('ROLE_ADMIN')">(ADMIN)</sec:authorize>
 								                </h4> 
 								                <p class="media-comment" >
@@ -171,27 +171,27 @@
  	 {{#param}} 
 	 <li class="media">
      <a class="pull-left" href="#">
-     <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
-     </a>
-     <div class="media-body">
+     <img class="media-object img-circle" src="/resources/images/unknown_user.png" alt="profile">
+     </a> 
+     <div class="media-body"> 
     	<div class="well well-lg">
      		<h4 class="media-heading reviews">{{userId}}</h4>
      		<ul class="media-date reviews list-inline">
-     		<li class="dd">22</li>
+     		<li class="dd">22</li> 
     		<li class="mm">09</li>
-     		<li class="aaaa">2014</li>
-    		</ul>
+     		<li class="aaaa">2014</li> 
+    		</ul> 
    			<p class="media-comment" data-rno="{{rno}}"> 
    	 			{{content}}
     		</p>
-			<div data-rno="{{rno}}">
+			<div data-rno="{{rno}}"> 
      		<a class="btn btn-info btn-circle text-uppercase" data-toggle="collapse"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>like</a>
 			{{#isAuth}} 
 			<a class="btn btn-success btn-circle text-uppercase" data-toggle="collapse" onclick="modReply({{rno}})"><i class="fa fa-pencil" aria-hidden="true"></i></span>modify</a>
 		    <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" onclick="delReply({{rno}});"><i class="fa fa-trash-o" aria-hidden="true"></i></span>delete</a>
 			{{/isAuth}} 
 			</div>  
-     		</div> 
+     		</div>  
      	</div> 
      </li>     
  	 {{/param}} 
@@ -268,11 +268,11 @@
 				url : "${pageContext.request.contextPath}/getCurrentUser",
 				method : "get",  
 				async : false,
-				dataType : "json",				 
-				success : function (data) {
-					if(!(Object.keys(data).length === 0) && data.user.userId == userId){
+				dataType : "json",				  
+				success : function (data) {  
+					if(!((data.param) === undefined) && data.param.userId == "${user.userId}"){
 						result = true;
-					} 
+					}   
 				},error : function (data) {
 					console.log(data);
 				}
@@ -281,7 +281,7 @@
 		 		return options.fn(this);
 		 	}else {
 		 		return options.inverse(this);
-		 	}
+			}
 		});
 	 
 	
@@ -378,7 +378,7 @@
 					userId : '${user.userId}',
 					content : content
 			}
-			
+			console.log(data);
 			 $.ajax({
 				url : "${pageContext.request.contextPath}/reply/${board.bno}", 
 				method : 'post',
@@ -409,10 +409,10 @@
 				success : function (data) {
 					console.log(data);
 					$("#replyUl").text(""); 
-					var replyTemplate = $("#replyTemplate").html();
+					var replyTemplate = $("#replyTemplate").html(); 
 					var template = Handlebars.compile(replyTemplate);
 					var html = template(data);  
-					$("#replyUl").append(html);
+					$("#replyUl").append(html); 
 				} , 
 				error : function (data) {
 					console.log(data); 

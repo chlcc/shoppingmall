@@ -4,14 +4,13 @@
 <mapper namespace="org.sup2is.mapper.FileRepository">
 
 	<insert id="insertFile" parameterType="org.sup2is.model.FileInfo">
-		INSERT INTO board_attach (fileName,originalName,fileSize,url,originalUrl)
-		VALUES (#{fileName},#{originalName},#{fileSize},#{url},#{originalUrl})
+		INSERT INTO attach (fileName,originalName,fileSize,url,originalUrl,category)
+		VALUES (#{fileName},#{originalName},#{fileSize},#{url},#{originalUrl},#{category})
 	</insert>
 	
-	<update id="setFileBno" parameterType="java.util.HashMap">
-		UPDATE board_attach
-		SET bno = 
-			(SELECT max(bno) FROM board)
+	<update id="setFileRno" parameterType="java.util.HashMap">
+		UPDATE attach
+		  SET rno = LAST_INSERT_ID()
 		WHERE fileName IN
 		<foreach collection="list" item="item" separator="," open="(" close=")">
 			#{item}
@@ -20,7 +19,7 @@
 	
 	<select id="getFileList" parameterType="Integer" resultType="org.sup2is.model.FileInfo">
 		SELECT *
-		FROM board_attach
+	  	  FROM attach 
 		WHERE bno = #{bno}
 	</select>
 	

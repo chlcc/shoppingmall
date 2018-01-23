@@ -9,7 +9,7 @@ public interface FileRepository {
 	
 	void insertFile(FileInfo fileInfo);
 
-	void setFileBno(Map<String, Object> param);
+	void setFileRno(Map<String, Object> param);
 
 	List<FileInfo> getFileList(int bno);
 	

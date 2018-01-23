@@ -32,7 +32,7 @@ public class BoardServliceImpl implements BoardService{
 		if(!ObjectUtils.isEmpty(form.getFilenames())) {
 			Map<String, Object> param = new HashMap<>();
 			param.put("list", form.getFilenames());
-			fileRepository.setFileBno(param);
+			fileRepository.setFileRno(param);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class BoardServliceImpl implements BoardService{
 		if(!ObjectUtils.isEmpty(board.getFilenames())) {
 			Map<String, Object> param = new HashMap<>();
 			param.put("list", board.getFilenames());
-			fileRepository.setFileBno(param);
+			fileRepository.setFileRno(param);
 		}
 	}
 
