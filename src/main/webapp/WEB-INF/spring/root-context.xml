@@ -14,7 +14,7 @@
 			<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 			<property name="url" value="jdbc:mysql://127.0.0.1:3306/shoppingmall?serverTimezone=UTC&amp;useSSL=false&amp;allowMultiQueries=true"/>
 			<property name="username" value="root"/>
-			<property name="password" value="1357"/>
+			<property name="password" value="0000"/>
 		</bean>       
 		     
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -22,11 +22,11 @@
 			<property name="configLocation" value="classpath:/mybatis-config.xml"/>
 			<property name="mapperLocations" value="classpath:/mappers/*.xml"></property>
 		</bean>
-		 
+		
 		<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 			<constructor-arg index="0" ref="sqlSessionFactory"/>
 		</bean>
-		 
+		
 		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 			<property name="dataSource" ref="dataSource"/>
 		</bean>

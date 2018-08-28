@@ -9,6 +9,22 @@
 	href="/resources/daumOpenEditor/css/editor.css" charset="utf-8" />
 <script type="text/javascript" charset="utf-8"
 	src="/resources/daumOpenEditor/js/editor_loader.js"></script>
+	
+	
+	<style>
+		#dragArea {
+			width: 100%;
+			height: 150px;
+			background: #eee;
+			font-size: 20px;
+			border-radius: 10px;
+			text-align: center;
+			line-height: 150px;
+		}	
+		
+	
+	</style>
+	
 <tags:layout>
 	<!-- /.intro section -->
 	<div id="intro">
@@ -29,9 +45,17 @@
 							</td> 
 						</tr>  
 						<tr>
-							<td width="13%">goods name : </td>  
+							<td width="13%">Goods name : </td>  
 							<td colspan="4">   
 								<form:input path="name" cssClass="form-control"/> 
+							</td>
+						</tr>
+						<tr>
+							<td width="13%">Goods image : </td>  
+							<td colspan="4">   
+								<div id="dragArea">
+									첨부할 이미지를 영역으로 드래그 해주세요
+								</div>
 							</td>
 						</tr>
 						
@@ -51,12 +75,6 @@
 								<form:input path="price" cssClass="form-control" onkeyup="inputNumberFormat(this)"/> 
 							</td>
 						</tr>
-						<!-- <tr>
-							<td width="13%">goods picture : </td>  
-							<td colspan="5">   
-								<input type="file" name="file"> 
-							</td> 
-						</tr> -->
 					<tr>   
 						<td colspan="5"><jsp:include
 								page="/WEB-INF/views/jsp/openAPI/daum/editor_frame.jsp"></jsp:include>
@@ -64,8 +82,13 @@
 					</tr>
  
 				</table>
+				
+				<div id="errors">
+                </div>
 				<input type="button" id="formBtn" class="btn-default"
 					style="font-weight: bold;" value="Submit"></input>
+				<input type="hidden" id="filename">
+				<input type="hidden" id="imageUrl"> 
 				<div id="errors"></div>
 			</form:form>
 		</div>
@@ -89,6 +112,17 @@
 		
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	
+	<script id="errorTemplate" type="text/x-handlebars-template">
+	<div>
+		<ul>
+		{{#fieldError}}
+			<li>{{.}}</li>
+		{{/fieldError}}
+		</ul>	
+	</div>
+	</script>
+	
+	
 	<script type="text/javascript">
 	
 		$("#plus").click(function () { 
@@ -102,9 +136,6 @@
 		$("input#price").keydown(function (x) { 
 			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}); 
-		
-		
-	
 	       
 		function comma(str) {
 		    str = String(str);
@@ -118,6 +149,53 @@
 		    obj.value = comma(uncomma(obj.value));
 		}
 		
+		$("#dragArea").on("dragenter", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+		});
+		$("#dragArea").on("dragover", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).css("background","#bbb");
+			
+		});
+		$("#dragArea").on("dragleave", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).css("background","#eee");
+			
+		});
+		$("#dragArea").on("drop", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			var file = e.originalEvent.dataTransfer.files[0];
+			$(this).text(file.name);
+			var category = $("#category option:selected").val();
+			var formData = new FormData();
+			formData.append("uploadFile" ,file);
+			console.log(category);
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/file/singleUploadImageAjax/" + category,
+				type : 'post' ,
+				data : formData,
+				dataType :'json',
+				processData : false,
+				contentType : false,
+				success : function (data) {
+					console.log(data);
+					$("#filename").val(data.param.fileName);
+					$("#imageUrl").val(data.param.url);  
+				},
+				error : function(data) {
+					console.log(data)
+				}
+			});
+		});
+		
+		
 		$("#formBtn").click(function(e) { 
 			Editor.save();  
 
@@ -125,10 +203,11 @@
 			var content = $("#goodsForm").serializeObject();  
 			content.content = textData; 
 
-			var filenames = [];
 			var color = [];
 			var count = [];
-			
+			content.filenames = [];
+			content.filenames[0] = $("#filename").val();
+			content.imageUrl = $("#imageUrl").val();
 			
 			$("input.color").each(function(i, value) {
 				color[i] = $(this).val(); 
@@ -138,40 +217,36 @@
 				count[i] = $(this).val(); 
 			}); 
 			  
-			$("input.fileName").each(function(i, value) { 
-				filenames[i] = $(this).val(); 
-			});
-			 
-			
-
-			var goodsInfo = { };
+			var goodsInfo = {};
 			
 			for(var i = 0; i<color.length; i++) {
 				goodsInfo[color[i]] = count[i];
-			} 
-			 
+			}
 			
 			content.goodsInfo = goodsInfo;
-			content.filenames = filenames;
 			content.price = parseInt(content.price);  
-			
 			console.log(content);
 			 
-			
-		 	$.ajax({ 
+		  	$.ajax({ 
 				url : '${pageContext.request.contextPath}/admin/goods',
 				method : 'post',
 				contentType : 'application/json;charset=utf-8',
 				data : JSON.stringify(content),
 				success : function(data) {
-					console.log(data);
-			
+					if(!(Object.keys(data.fieldError).length === 0)) {
+			 			$("#errors").text("");
+						var errorTemplate = $("#errorTemplate").html();
+						var template = Handlebars.compile(errorTemplate);
+						var html = template(data);
+						$("#errors").append(html);
+					}else {
+					 	location.href = "${pageContext.request.contextPath}/admin/dashboard";
+					}
 				},
 				error : function(error) {
 					console.log(error);
 				}
- 
-			}); 
+			});
 		});
 	</script>
 

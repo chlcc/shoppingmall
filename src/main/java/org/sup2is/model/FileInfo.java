@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class FileInfo {
 
-	private int bno;
+	private int rno;
 	private String fileName;
 	private String originalName;
 	private long fileSize;

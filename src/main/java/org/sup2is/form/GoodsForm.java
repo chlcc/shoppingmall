@@ -15,6 +15,9 @@ import lombok.Data;
 @Data
 public class GoodsForm {
 	
+	
+	private int gno;
+	
 	@NotEmpty
 	private String name;
 	
@@ -30,6 +33,8 @@ public class GoodsForm {
 	private Map<String, Integer> goodsInfo;
 	
 	private List<String> filenames;
+	
+	private String imageUrl;
 	
 }
 

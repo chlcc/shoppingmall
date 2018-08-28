@@ -277,7 +277,7 @@ span.tags {
 											</div>
 											<div class="col-xs-12 col-sm-4 emphasis">
 												<h2>
-													<strong>245</strong>
+													<strong>0</strong>
 												</h2>
 												<p>
 													<small>Coupon</small>
@@ -288,7 +288,7 @@ span.tags {
 											</div>
 											<div class="col-xs-12 col-sm-4 emphasis">
 												<h2>
-													<strong>245</strong>
+													<strong>0</strong>
 												</h2>
 												<p>
 													<small>Following</small>

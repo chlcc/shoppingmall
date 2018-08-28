@@ -35,7 +35,6 @@ public class AdminController extends BaseController {
 	private FileService fileService;
 	
 	
-	
 	@RequestMapping("add_goods")
 	public String addGoods(@ModelAttribute GoodsForm form) {
 		

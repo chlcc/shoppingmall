@@ -147,11 +147,6 @@
 			
 			var accessUrl = urlpath.substring(urlpath.indexOf("/") + 1, urlpath.lastIndexOf("/"));
 			  
-			 
-			console.log(accessUrl); 
-			  
-			 
-			  
 			var formData = new FormData($("#daumImageForm")[0]);
 			
 		 	$.ajax({
@@ -163,8 +158,6 @@
 				contentType : false,
 				success : function (data) {
 					var fileInfo = data.param; 
-					
-					console.log(fileInfo);
 					$(opener.document).find("#filenameForm").append("<input type='hidden' class='filename' value='"+ fileInfo.fileName+"'>");
 					done(fileInfo); 
 					 

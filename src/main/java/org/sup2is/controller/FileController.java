@@ -88,7 +88,6 @@ public class FileController extends BaseController {
             } catch (Exception e) {
             	logger.error(e.getMessage());
             	return JsonObject.create(e);
-            	
             }
 		}else {
 			return JsonObject.create(message.getMessage("invalid.fileNotFound", null, Locale.getDefault()));

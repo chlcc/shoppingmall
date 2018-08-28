@@ -145,7 +145,5 @@ public class JsonObject extends HashMap<String, Object>{
 	public enum Result {
 		success,failed
 	}
-	
-	
 }
 

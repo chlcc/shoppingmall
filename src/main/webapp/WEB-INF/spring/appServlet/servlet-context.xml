@@ -47,7 +47,7 @@
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" /> 
 	
-	<beans:bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" /> 
+	<!-- <beans:bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" /> --> 
 
 
 	

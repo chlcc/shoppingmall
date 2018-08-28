@@ -20,7 +20,7 @@
 	<select id="getFileList" parameterType="Integer" resultType="org.sup2is.model.FileInfo">
 		SELECT *
 	  	  FROM attach 
-		WHERE bno = #{bno}
+		WHERE rno = #{rno}
 	</select>
 	
 </mapper>

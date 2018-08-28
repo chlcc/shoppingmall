@@ -4,8 +4,8 @@
 <mapper namespace="org.sup2is.mapper.AdminRepository">
 
 	<insert id="addGoods" parameterType="org.sup2is.form.GoodsForm">
-		INSERT INTO goods (name,category,price,content)
-		VALUES (#{name},#{category},#{price},#{content})
+		INSERT INTO goods (name,category,price,content,imageUrl)
+		VALUES (#{name},#{category},#{price},#{content},#{imageUrl})
 	</insert>
 	
 	<insert id="addGoodsInfo" parameterType="java.util.Map">

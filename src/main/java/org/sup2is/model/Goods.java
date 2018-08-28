@@ -10,9 +10,9 @@ public class Goods {
 	
 	private int gno;
 	private int price;
-	private int count;
+	private String name;
 	private String category;
 	private Date publish_at;
 	private String content;
-
+	private String imageUrl;
 }

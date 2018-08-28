@@ -33,11 +33,7 @@ public class AdminServiceImpl implements AdminService{
 			fileRepository.setFileRno(param);
 		}
 		
-		System.out.println(form.getGoodsInfo().toString());
-		
-		
 		adminRepository.addGoodsInfo(form.getGoodsInfo());
-		 
 		
 	}
 
