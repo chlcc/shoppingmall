@@ -13,8 +13,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
 CREATE TABLE `reply` (
   `rno` int(11) NOT NULL AUTO_INCREMENT,
   `bno` int(11) NOT NULL,
@@ -26,7 +24,6 @@ CREATE TABLE `reply` (
   KEY `bno` (`bno`),
   CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE `board` (
   `bno` int(11) NOT NULL AUTO_INCREMENT,
@@ -42,7 +39,6 @@ CREATE TABLE `board` (
   PRIMARY KEY (`bno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `authorities` (
   `userId` varchar(45) NOT NULL,
   `role` varchar(45) NOT NULL DEFAULT 'ROLE_USER',
@@ -50,16 +46,33 @@ CREATE TABLE `authorities` (
   CONSTRAINT `fk_username` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-CREATE TABLE `attachfile` (
+CREATE TABLE `attach` (
   `fileName` varchar(45) NOT NULL,
-  `bno` int(11) DEFAULT NULL,
+  `rno` int(11) DEFAULT NULL,
   `originalName` varchar(45) NOT NULL,
   `fileSize` int(11) NOT NULL,
   `url` varchar(250) NOT NULL,
   `originalUrl` varchar(250) NOT NULL,
-  PRIMARY KEY (`fileName`),
-  KEY `attach_file_ibfk_1` (`bno`),
-  CONSTRAINT `attachfile_ibfk_1` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`)
+  `category` varchar(45) NOT NULL,
+  PRIMARY KEY (`fileName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `goods` (
+  `gno` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `price` varchar(45) NOT NULL,
+  `content` text NOT NULL,
+  `category` varchar(45) NOT NULL,
+  `publish_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `imageUrl` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`gno`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `goods_info` (
+  `gno` int(11) NOT NULL,
+  `color` varchar(45) NOT NULL,
+  `count` int(11) NOT NULL,
+  PRIMARY KEY (`gno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

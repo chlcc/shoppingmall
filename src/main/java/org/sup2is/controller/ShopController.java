@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sup2is.model.Goods;
+import org.sup2is.model.GoodsInfo;
 import org.sup2is.service.FileService;
 import org.sup2is.service.ShopService;
 
@@ -26,14 +27,18 @@ public class ShopController extends BaseController{
 	@Autowired
 	private FileService fileService;
 	
-	@RequestMapping("detail")
-	public String detailView() {
+	@RequestMapping("detail/{gno}")
+	public String detailView(@PathVariable("gno") int gno, Model model) {
+		Goods goods = shopService.findGoodsByGno(gno);
+		goods.setGoodsInfo(shopService.findGoodsInfoByGno(gno));
+		model.addAttribute("goods", goods);
 		return "shop/detail";
 	}
 	
+	
+	
 	@RequestMapping("{category}")
 	public String categoryView(@PathVariable("category") String category, Model model) {
-			
 		List<Goods> goodsList = shopService.getGoodsListByCategory(category.replace(" ", ""));
 		model.addAttribute("goodsList", goodsList);
 		return "shop/list";

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sup2is.model.Goods;
+import org.sup2is.model.GoodsInfo;
 
 @Repository
 public class ShopRepositoryImpl implements ShopRepository{
@@ -23,5 +24,15 @@ public class ShopRepositoryImpl implements ShopRepository{
 	@Override
 	public List<Goods> getGoodsListByCategory(String category) {
 		return sqlSessionTemplate.selectList(namespace + "getGoodsListByCategory", category);
+	}
+
+	@Override
+	public Goods findGoodsByGno(int gno) {
+		return sqlSessionTemplate.selectOne(namespace+ "findGoodsByGno" , gno);
+	}
+
+	@Override
+	public GoodsInfo findGoodsInfoByGno(int gno) {
+		return sqlSessionTemplate.selectOne(namespace+ "findGoodsInfoByGno" , gno);
 	}
 }

@@ -8,6 +8,18 @@
 		FROM goods 
 		WHERE category = #{value}
 	</select>
+
+	<select id="findGoodsByGno" parameterType="java.lang.Integer" resultType="org.sup2is.model.Goods">
+		SELECT *
+		FROM goods 
+		WHERE gno = #{value}
+	</select>
 	
+
+	<select id="findGoodsInfoByGno" parameterType="java.lang.Integer" resultType="org.sup2is.model.GoodsInfo">
+		SELECT *
+		FROM goods_info
+		WHERE gno = #{value}
+	</select>
 	
 </mapper>

@@ -98,7 +98,7 @@
 	src="/resources/daumOpenEditor/js/editor_loader.js"></script>
 <tags:layout>
  
-	<div class="container-fluid container" >
+	<div class="container-fluid container" style="margin-bottom: 100px;">
 		<div class="title-arch">
 		Our Project
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pulvinar ex pulvinar est laoreet ullamcorper.</p>

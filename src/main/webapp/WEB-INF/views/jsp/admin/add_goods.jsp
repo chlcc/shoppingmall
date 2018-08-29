@@ -54,7 +54,7 @@
 							<td width="13%">Goods image : </td>  
 							<td colspan="4">   
 								<div id="dragArea">
-									첨부할 이미지를 영역으로 드래그 해주세요
+									첨부할 이미지를 영역으로 드래그 해주세요 400x600
 								</div>
 							</td>
 						</tr>
@@ -65,7 +65,7 @@
 								<td ><input type="text" class="color form-control"/></td> 
 								<td >Count : </td>  
 								<td><input type="number" class="count form-control" /></td>  
-								<td width="8%"><a href="#" id="plus"><img src="/resources/images/plus.png" style="width: 30px;"></a><a href="#" id="minus"><img src="/resources/images/minus.png" style="width: 30px;"></a> 
+								<!-- <td width="8%"><a href="#" id="plus"><img src="/resources/images/plus.png" style="width: 30px;"></a><a href="#" id="minus"><img src="/resources/images/minus.png" style="width: 30px;"></a> --> 
 								</td>   
 							</tr>   
 						</tbody>       
@@ -80,7 +80,6 @@
 								page="/WEB-INF/views/jsp/openAPI/daum/editor_frame.jsp"></jsp:include>
 						</td>
 					</tr>
- 
 				</table>
 				
 				<div id="errors">
@@ -127,8 +126,9 @@
 	
 		$("#plus").click(function () { 
 			$("#goodsInfoArea").append($("#goodsInfo").clone(true));
+			var sdf = 1;
 		});      
-		      
+		    
 		$("#minus").click(function () {    
 			$(this).parents('tr').remove();
 		});
@@ -185,7 +185,6 @@
 				processData : false,
 				contentType : false,
 				success : function (data) {
-					console.log(data);
 					$("#filename").val(data.param.fileName);
 					$("#imageUrl").val(data.param.url);  
 				},
@@ -224,10 +223,11 @@
 			}
 			
 			content.goodsInfo = goodsInfo;
-			content.price = parseInt(content.price);  
+			//content.price = parseInt($("#price").val().replaceAll(",",""));
+			content.price = $("#price").val();
 			console.log(content);
 			 
-		  	$.ajax({ 
+		   	$.ajax({ 
 				url : '${pageContext.request.contextPath}/admin/goods',
 				method : 'post',
 				contentType : 'application/json;charset=utf-8',

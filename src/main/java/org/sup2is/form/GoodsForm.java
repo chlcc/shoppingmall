@@ -25,7 +25,7 @@ public class GoodsForm {
 	private String category;
 
 	@NotNull // NotEmpty로 int 받으면 안되어서 바꿈 ..
-	private int price;
+	private String price;
 	
 	@NotEmpty
 	private String content;

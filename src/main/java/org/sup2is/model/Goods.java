@@ -9,10 +9,11 @@ import lombok.Data;
 public class Goods {
 	
 	private int gno;
-	private int price;
+	private String price;
 	private String name;
 	private String category;
 	private Date publish_at;
 	private String content;
 	private String imageUrl;
+	private GoodsInfo goodsInfo;
 }
