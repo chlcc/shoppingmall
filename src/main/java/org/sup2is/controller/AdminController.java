@@ -1,6 +1,7 @@
 package org.sup2is.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -31,9 +32,6 @@ public class AdminController extends BaseController {
 	@Autowired
 	private AdminService adminService;
 	
-	@Autowired
-	private FileService fileService;
-	
 	
 	@RequestMapping("add_goods")
 	public String addGoods(@ModelAttribute GoodsForm form) {
@@ -44,7 +42,6 @@ public class AdminController extends BaseController {
 	public String dashboard() {
 		return "admin/dashboard";
 	}
-	
 	
 	@RequestMapping(value = "goods" , method = RequestMethod.POST)
 	@ResponseBody

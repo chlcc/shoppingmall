@@ -65,6 +65,7 @@ CREATE TABLE `goods` (
   `category` varchar(45) NOT NULL,
   `publish_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `imageUrl` varchar(200) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`gno`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -76,3 +77,12 @@ CREATE TABLE `goods_info` (
   PRIMARY KEY (`gno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `cart` (
+  `cno` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` varchar(45) NOT NULL,
+  `gno` int(11) NOT NULL,
+  `count` int(11) NOT NULL,
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -37,6 +37,7 @@
                 			<img src="${goods.imageUrl}" style="width: 400px; height: 600px;">
                 		</td>
                 		<td align="center">
+               				<input type="hidden" id="gno" value="${goods.gno}">
                 			<table style="width: 80%; height: 100%;" > 
                 				<tr>
                 					<td height="60px;" width="50%" style="font-size: 40px;" colspan="2">
@@ -64,7 +65,7 @@
                 						수량 :
                 					</td>
                 					<td>
-                						<input type="number" class="count form-control" value="1" min="1"
+                						<input id="count" type="number" class="count form-control" value="1" min="1"
                 						max="${goods.goodsInfo.count}" onchange="numberChange(this)"/>
                 					</td>
                 				</tr>
@@ -78,7 +79,7 @@
                 				</tr>
                					<tr>
 			         				<td height="15%" width="50%" style="font-weight: bold; font-size: 20px;">
-			         					<a href="#" class="btn-default">Cart</a>
+			         					<a id="addCart" href="#" class="btn-default">Cart</a>
 			         				</td>
 			         				<td height="15%" width="50%" style="font-weight: bold; font-size: 20px;">
 			         					<a href="#" class="btn-default">Buy</a>
@@ -99,6 +100,39 @@
             </div>
         </div>
          
+        
+ <div class="modal fade" id="loginPopup" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<h4 class="modal-title"></h4>
+      	<hr> 
+      	로그인 하시겠습니까?
+      </div> 
+      <div class="modal-footer"> 
+        <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary" onclick="javascript:location.href='${pageContext.request.contextPath}/login'">OK</button> 
+      </div> 
+    </div>
+  </div>
+</div>
+
+ <div class="modal fade" id="cartCheck" tabindex="-1" role="dialog" aria-labelledby="deleteCheckModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<h4 class="modal-title"></h4>
+      	<hr> 
+      	장바구니에 등록되었습니다. 확인하시겠습니까?
+      </div> 
+      <div class="modal-footer"> 
+        <button type="button" class="btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn-primary" onclick="javascript:location.href='${pageContext.request.contextPath}/user/mypage'">OK</button> 
+      </div> 
+    </div>
+  </div>
+</div>
+        
         
 	<script type="text/javascript">
 		 
@@ -125,6 +159,35 @@
 		    str = String(str); 
 		    return str.replace(/[^\d]+/g, '');
 		}
+		
+		$("#addCart").click(function () {
+			var cart = {};
+			cart.count = $("#count").val();
+			cart.gno = $("#gno").val();
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/cart",
+				method : "post",
+				contentType : 'application/json;charset=utf-8',
+				dataType :'json',
+				data : JSON.stringify(cart),
+				success : function (data) {
+					
+					console.log(data);
+					if(data.result == "failed") {
+						$("#loginPopup").modal("show");
+						return;
+					}else {
+						$("#cartCheck").modal("show");
+					}
+				},
+				error : function (data) {
+					console.log(data);
+				}
+			});
+			
+		});
+		
 		  
 	</script>
 </tags:layout>
