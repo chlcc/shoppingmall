@@ -9,4 +9,6 @@ public interface CartRepository {
 	void addGoods(Cart cart);
 
 	List<Cart> findCartListByUserId(String userId);
+
+	void removeGoods(int gno);
 }

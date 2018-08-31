@@ -23,4 +23,9 @@ public class CartServiceImpl implements CartService{
 		return cartRepository.findCartListByUserId(userId);
 	}
 
+	@Override
+	public void removeGoods(int gno) {
+		cartRepository.removeGoods(gno);
+	}
+
 }

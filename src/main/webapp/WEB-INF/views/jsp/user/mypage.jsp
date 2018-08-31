@@ -319,8 +319,14 @@ span.tags {
 										</div>
 									</div>
 									<div class="panel-body">
+										<c:if test="${cartList.size() < 0}"> 
+											<div class="row">
+												<hr>
+												<p style="text-align: center;"><strong>등록된 상품이 존재하지 않습니다.</strong></p>
+												<hr>
+											</div>
+										</c:if>
 										<c:forEach items="${cartList}" var="cart">
-									 	<hr>
 											<div class="row">
 											<div class="col-xs-2">
 												<img class="img-responsive" src="${cart.goods.imageUrl}" style="width: 100px;height: 150px;">
@@ -344,7 +350,7 @@ span.tags {
 													max="${cart.goods.goodsInfo.count}" min="1" onchange="calculatePrice()">
 												</div>
 												<div class="col-xs-2">
-													<button type="button" class="btn btn-link btn-xs">
+													<button type="button" class="btn btn-link btn-xs" onclick="removeGoods(${cart.gno})">
 														<span class="glyphicon glyphicon-trash"> </span>
 													</button>
 												</div>
@@ -386,7 +392,14 @@ span.tags {
 											</div>
 										</div>
 									</div>
-									<div class="panel-body">
+									<%-- <c:if test="${cartList.size() > 0}"> --%> 
+										<div class="row">
+											<hr>
+											<p style="text-align: center;"><strong>등록된 상품이 존재하지 않습니다.</strong></p>
+											<hr>
+										</div>
+									<%-- </c:if> --%>
+									<!-- <div class="panel-body">
 										<div class="row">
 											<div class="col-xs-2">
 												<img class="img-responsive" src="http://placehold.it/100x70">
@@ -445,7 +458,7 @@ span.tags {
 											</div>
 										</div>
 										<hr>
-									</div>
+									</div> --> 
 									<div class="panel-footer">
 										<div class="row text-center">
 											<div class="col-xs-9">
@@ -557,12 +570,14 @@ span.tags {
 	</script>
 	
 	<script type="text/javascript">
-	
-		console.log(parseInt(uncomma($(".price")[1].innerHTML))); 
 			
 		$(document).ready(function () {
 			calculatePrice();
 			
+			var tab = '${tab}';
+			
+			$(".tab-pane").removeClass("active in");
+			$("#" + tab).addClass("active in");
 		});
 	
 		function calculatePrice() {
@@ -587,6 +602,24 @@ span.tags {
 		    str = String(str); 
 		    return str.replace(/[^\d]+/g, '');
 		}
+		
+		function removeGoods(gno) {
+			console.log(gno);
+			
+		 	$.ajax({
+				url : "${pageContext.request.contextPath}/cart/" + gno,
+				method : 'delete',
+				success : function (data) {
+					console.log(data);
+					location.href = "${pageContext.request.contextPath}/user/mypage/tab2";
+				},
+				error : function (data) { 
+					console.log(data);
+				}
+				
+			});
+		}
+		
 		
 		$("#userModBtn").click(function () {
 			$("#userModModal").modal('show');  

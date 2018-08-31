@@ -15,4 +15,11 @@
 		WHERE userId = #{value}
 		GROUP BY gno
 	</select>
+	
+	<delete id="removeGoods" parameterType="Integer">
+		DELETE
+		FROM cart
+		WHERE gno = #{gno}
+	</delete>
+	
 </mapper>

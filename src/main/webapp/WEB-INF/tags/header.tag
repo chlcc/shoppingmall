@@ -25,7 +25,7 @@
 	                    </sec:authorize>
 	                    <sec:authorize access="hasRole('ROLE_ADMIN')">
 	                    	<li><a href="${pagecontext.request.contextpath}/admin/dashboard">admin</a>
-		                    <li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>
+		                    <li><a href="${pagecontext.request.contextpath}/user/mypage/tab1">mypage</a></li>
 	                    	<li><a href="${pagecontext.request.contextpath}/logout">logout</a></li>
 	                    </sec:authorize>
 	                </ul>

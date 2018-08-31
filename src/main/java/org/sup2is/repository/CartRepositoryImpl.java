@@ -29,5 +29,11 @@ public class CartRepositoryImpl implements CartRepository{
 	public List<Cart> findCartListByUserId(String userId) {
 		return sqlSessionTemplate.selectList(namespace+ "findCartListByUserId" , userId);
 	}
+
+	@Override
+	public void removeGoods(int gno) {
+		sqlSessionTemplate.delete(namespace +"removeGoods" , gno);
+		
+	}
 	
 }

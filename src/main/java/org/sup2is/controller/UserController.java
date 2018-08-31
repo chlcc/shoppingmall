@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,14 +52,15 @@ public class UserController extends BaseController {
 	@Autowired
 	private ShopService shopService;
 
-	@RequestMapping("mypage")
-	public String mypage(Principal principal, Model model, @ModelAttribute UserInfoForm userInfoForm) throws Exception {
+	@RequestMapping("mypage/{tab}")
+	public String mypage(Principal principal, Model model,@PathVariable("tab") String tab , @ModelAttribute UserInfoForm userInfoForm) throws Exception {
 		String userId = principal.getName();
 		User user = userService.findByUserId(userId);
 		
 		List<Cart> cartList = cartService.findCartListByUserId(user.getUserId());
 		List<Goods> goodsList = new ArrayList<>();
 //		Map<String,Object> cartMap = new HashMap<>();
+		
 		
 		for(Cart cart : cartList) {
 			Goods goods = shopService.findGoodsByGno(cart.getGno());
@@ -68,6 +70,10 @@ public class UserController extends BaseController {
 			if(!goodsList.contains(goods)) {
 				goodsList.add(goods);
 			}
+		}
+		
+		if(tab != null){
+			model.addAttribute("tab" , tab);
 		}
 		
 		model.addAttribute("user" , user);

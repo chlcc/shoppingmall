@@ -127,7 +127,7 @@
       </div> 
       <div class="modal-footer"> 
         <button type="button" class="btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn-primary" onclick="javascript:location.href='${pageContext.request.contextPath}/user/mypage'">OK</button> 
+        <button type="button" class="btn-primary" onclick="javascript:location.href='${pageContext.request.contextPath}/user/mypage/tab2'">OK</button> 
       </div> 
     </div>
   </div>
