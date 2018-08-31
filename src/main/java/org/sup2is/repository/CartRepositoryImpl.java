@@ -1,6 +1,8 @@
 package org.sup2is.repository;
 
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,11 @@ public class CartRepositoryImpl implements CartRepository{
 	@Override
 	public void addGoods(Cart cart) {
 		sqlSessionTemplate.insert(namespace + "addGoods" , cart);
+	}
+
+	@Override
+	public List<Cart> findCartListByUserId(String userId) {
+		return sqlSessionTemplate.selectList(namespace+ "findCartListByUserId" , userId);
 	}
 	
 }

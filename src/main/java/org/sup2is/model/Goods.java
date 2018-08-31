@@ -16,4 +16,5 @@ public class Goods {
 	private String content;
 	private String imageUrl;
 	private GoodsInfo goodsInfo;
+	private String description;
 }

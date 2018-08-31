@@ -253,7 +253,6 @@ span.tags {
 											<div class="col-xs-12 col-sm-4 text-center">
 												<figure>
 													<img
-														src="http://www.localcrimenews.com/wp-content/uploads/2013/07/default-user-icon-profile.png"
 														alt="" class="img-circle img-responsive">
 													<figcaption class="ratings">
 														<button class="btn btn-warning btn-block" id="userModBtn"> 
@@ -316,30 +315,33 @@ span.tags {
 														Shopping Cart
 													</h5>
 												</div>
-											</div>
+											</div> 
 										</div>
 									</div>
 									<div class="panel-body">
-										<div class="row">
+										<c:forEach items="${cartList}" var="cart">
+									 	<hr>
+											<div class="row">
 											<div class="col-xs-2">
-												<img class="img-responsive" src="http://placehold.it/100x70">
+												<img class="img-responsive" src="${cart.goods.imageUrl}" style="width: 100px;height: 150px;">
 											</div>
 											<div class="col-xs-4">
 												<h4 class="product-name">
-													<strong>Product name</strong>
+													<strong>${cart.goods.name}</strong>
 												</h4>
 												<h4>
-													<small>Product description</small>
-												</h4>
-											</div>
+													<small>${cart.goods.description}</small>
+												</h4> 
+											</div> 
 											<div class="col-xs-6">
 												<div class="col-xs-6 text-right">
 													<h6>
-														<strong>25.00 <span class="text-muted">x</span></strong>
+														<strong class="price">${cart.goods.price}원<span class="text-muted">&nbsp;&nbsp;&nbsp;X</span></strong>
 													</h6>
-												</div>
+												</div> 
 												<div class="col-xs-4">
-													<input type="text" class="form-control input-sm" value="1">
+													<input type="number" class="form-control input-sm count" value="${cart.count}" 
+													max="${cart.goods.goodsInfo.count}" min="1" onchange="calculatePrice()">
 												</div>
 												<div class="col-xs-2">
 													<button type="button" class="btn btn-link btn-xs">
@@ -349,41 +351,13 @@ span.tags {
 											</div>
 										</div>
 										<hr>
-										<div class="row">
-											<div class="col-xs-2">
-												<img class="img-responsive" src="http://placehold.it/100x70">
-											</div>
-											<div class="col-xs-4">
-												<h4 class="product-name">
-													<strong>Product name</strong>
-												</h4>
-												<h4>
-													<small>Product description</small>
-												</h4>
-											</div>
-											<div class="col-xs-6">
-												<div class="col-xs-6 text-right">
-													<h6>
-														<strong>25.00 <span class="text-muted">x</span></strong>
-													</h6>
-												</div>
-												<div class="col-xs-4">
-													<input type="text" class="form-control input-sm" value="1">
-												</div>
-												<div class="col-xs-2">
-													<button type="button" class="btn btn-link btn-xs">
-														<span class="glyphicon glyphicon-trash"> </span>
-													</button>
-												</div>
-											</div>
-										</div>
-										<hr>
+										</c:forEach>
 									</div>
 									<div class="panel-footer">
 										<div class="row text-center">
 											<div class="col-xs-9">
 												<h4 class="text-right">
-													Total <strong>$50.00</strong>
+													Total <strong id="cartTotalPrice">0</strong>
 												</h4>
 											</div>
 											<div class="col-xs-3">
@@ -476,7 +450,7 @@ span.tags {
 										<div class="row text-center">
 											<div class="col-xs-9">
 												<h4 class="text-right">
-													Total <strong>$50.00</strong>
+													Total <strong id="totalPrice">0</strong>
 												</h4>
 											</div>
 											<div class="col-xs-3">
@@ -582,9 +556,40 @@ span.tags {
 
 	</script>
 	
-	<script type="text/javascript"> 
+	<script type="text/javascript">
+	
+		console.log(parseInt(uncomma($(".price")[1].innerHTML))); 
+			
+		$(document).ready(function () {
+			calculatePrice();
+			
+		});
+	
+		function calculatePrice() {
+			var $price = $(".price");
+			var $count = $(".count");
+			
+			var totalPrice = 0;
+			
+			$price.each(function(index, element) {
+				totalPrice += parseInt(uncomma(this.innerHTML)) * parseInt($count[index].value); 
+			});
+			
+			$("#cartTotalPrice").text(comma(totalPrice) + "원");
+		} 
+		
+		function comma(str) {
+			str = String(str);
+			return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+		}
+		
+		function uncomma(str) {
+		    str = String(str); 
+		    return str.replace(/[^\d]+/g, '');
+		}
+		
 		$("#userModBtn").click(function () {
-			$("#userModModal").modal('show');
+			$("#userModModal").modal('show');  
 		});
 		
 		
@@ -634,6 +639,9 @@ span.tags {
 				});
  
 		}); 
+		
+		 
+
 		
 		
 	</script>

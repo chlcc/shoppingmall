@@ -39,9 +39,11 @@ public class CartController extends BaseController{
 			return JsonObject.create(message.getMessage("login.require", null, Locale.getDefault()));
 		}
 		
-		Goods goods = shopService.findGoodsByGno(cartForm.getGno());
-		goods.setGoodsInfo(shopService.findGoodsInfoByGno(cartForm.getGno()));
-		Cart cart = new Cart(principal.getName(),goods,cartForm.getCount());
+//		Cart cart = new Cart(principal.getName(),cartForm.getGno(),cartForm.getCount());
+		Cart cart = new Cart();
+		cart.setUserId(principal.getName());
+		cart.setGno(cartForm.getGno());
+		cart.setCount(cartForm.getCount());
 		try {
 			cartService.addGoods(cart);
 			return JsonObject.create();

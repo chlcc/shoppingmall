@@ -5,7 +5,14 @@
 
 	<insert id="addGoods" parameterType="org.sup2is.model.Cart">
 		INSERT INTO cart (userId,gno,count)
-		VALUES (#{userId},#{goods.gno},#{count})
+		VALUES (#{userId},#{gno},#{count})
 	</insert>
 
+	<select id="findCartListByUserId" parameterType="java.lang.String" resultType="org.sup2is.model.Cart">
+		SELECT cno, userId, gno, create_at,
+			(SELECT SUM(cart.count)) as count
+		FROM cart
+		WHERE userId = #{value}
+		GROUP BY gno
+	</select>
 </mapper>
