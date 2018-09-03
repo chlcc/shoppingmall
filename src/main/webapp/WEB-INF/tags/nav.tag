@@ -9,9 +9,9 @@
              <div class="container">
                  <div id="navbar-scroll" class="collapse navbar-collapse navbar-backyard navbar-right">
                      <ul class="nav navbar-nav">
-                         <li><a href="/shop/new">NEW</a></li>
-                         <li><a href="/shop/best">BEST</a></li>
-                         <li><a href="/shop/sale">SALE</a></li>
+                         <!-- <li><a href="/shop/new">NEW</a></li> -->
+                         <!-- <li><a href="/shop/best">BEST</a></li> -->
+                         <!-- <li><a href="/shop/sale">SALE</a></li> -->
                          <li><a href="/shop/living room">living room</a></li>
                          <li><a href="/shop/kitchen">kitchen</a></li>
                          <li><a href="/shop/kids">kids</a></li>

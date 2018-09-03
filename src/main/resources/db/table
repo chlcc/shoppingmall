@@ -23,7 +23,7 @@ CREATE TABLE `reply` (
   PRIMARY KEY (`rno`),
   KEY `bno` (`bno`),
   CONSTRAINT `reply_ibfk_1` FOREIGN KEY (`bno`) REFERENCES `board` (`bno`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `board` (
   `bno` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,7 +37,7 @@ CREATE TABLE `board` (
   `anonymous` tinyint(1) DEFAULT '0',
   `display` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`bno`)
-) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `authorities` (
   `userId` varchar(45) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE `goods` (
   `imageUrl` varchar(200) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`gno`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `goods_info` (

@@ -15,7 +15,7 @@
 .project {
 	width: 100%;
 	height: 400px; 
-	background-image: url(/resources/images/back3.jpg);
+	background-image: url(/resources/images/dashboard_3.jpg);
 	background-size: cover;
 	background-position: center;
 	padding: 0 !important;
@@ -23,15 +23,15 @@
 }  
 
 .project-2 { 
-	background-image: url(/resources/images/back1.jpg);
+	background-image: url(/resources/images/dashboard_1.jpg);
 }  
  
 .project-3 { 
-	background-image: url(/resources/images/back2.jpg);
+	background-image: url(/resources/images/dashboard_2.jpg);
 }
 
 .project-4 {
-	background-image: url(/resources/images/back4.jpg);
+	background-image: url(/resources/images/dashboard_4.jpg);
 }
 
 .project-hover {
@@ -97,7 +97,6 @@
 <script type="text/javascript" charset="utf-8"
 	src="/resources/daumOpenEditor/js/editor_loader.js"></script>
 <tags:layout>
- 
 	<div class="container-fluid container" style="margin-bottom: 100px;">
 		<div class="title-arch">
 		Our Project
@@ -123,10 +122,11 @@
 	    </div>
 		<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 project project-3 wow animated animated2 fadeInLeft"  style="width: 24%">
 	    	<div class="project-hover">
-	        	<h2>통계 페이지</h2>
+	        	<h2>상품 관리 페이지</h2>
 	            <hr />
-	            <p>오늘 매출, 저번달 매출 등 통계를 나타내주는 페이지입니다.</p>
-	            <a href="${pageContext.request.contextPath}/admin/statistics">Go</a> 
+	            <p>등록된 상품의 재고, 판매량 등을 관리할 수 있는 페이지입니다.</p>
+	            <%-- <a href="${pageContext.request.contextPath}/admin/statistics" onclick="javascript:alert('준비중입니다.')">Go</a> --%> 
+	            <a href="#" onclick="javascript:alert('준비중입니다.')">Go</a> 
 	        </div> 
 	    </div> 
 		<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 project project-4 wow animated animated2 fadeInLeft"  style="width: 24%">
@@ -135,7 +135,7 @@
 	            <hr />
 	            <p>오늘 매출, 저번달 매출 등 통계를 나타내주는 페이지입니다. 
 	            (현재 준비중)</p>
-	            <a href="#">See Project</a> 
+	            <a href="#" onclick="javascript:alert('준비중입니다.')">Go</a> 
 	        </div>
 	    </div> 
 	    <div class="clearfix"></div>

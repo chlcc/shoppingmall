@@ -82,7 +82,7 @@
 			         					<a id="addCart" href="#" class="btn-default">Cart</a>
 			         				</td>
 			         				<td height="15%" width="50%" style="font-weight: bold; font-size: 20px;">
-			         					<a href="#" class="btn-default">Buy</a>
+			         					<a href="#" class="btn-default" onclick="javascript:alert('준비중입니다.')">Buy</a>
 			         				</td>
 			       				</tr>
                 			</table>

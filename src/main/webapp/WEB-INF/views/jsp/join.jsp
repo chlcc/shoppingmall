@@ -4,6 +4,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
 
+
+<style>
+	li {
+		
+		list-style: none;	
+	
+	}
+</style>
+
 <tags:layout>
      <!-- /.intro section -->
         <div id="intro">
@@ -41,7 +50,11 @@
 	                        	
 	                        	<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="userId"></form:errors>
+	                        			<ul>
+	                        				<li>
+			                        			<form:errors path="userId"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	
@@ -57,7 +70,11 @@
 	                        	
 	                        	<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="password"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="password"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	
@@ -72,7 +89,11 @@
 	                        	</tr>
 	                        	<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="userName"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="userName"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	
@@ -87,7 +108,11 @@
 	                        	</tr>
 	                        	<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="address"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="address"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	<tr>
@@ -101,7 +126,11 @@
 	                        	</tr>
 	                        	<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="address_detailed"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="address_detailed"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	
@@ -117,7 +146,11 @@
 	                        	
                         		<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="phone"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="phone"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	<tr>
@@ -130,7 +163,11 @@
 	                        	</tr>
                         		<tr>
 	                        		<td colspan="2">
-	                        			<form:errors path="email"></form:errors>
+                        				<ul>
+	                        				<li>
+			                        			<form:errors path="email"></form:errors>
+	                        				</li>
+	                        			</ul>
 	                        		</td>
 	                        	</tr>
 	                        	<tr >
