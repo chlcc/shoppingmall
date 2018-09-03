@@ -18,5 +18,5 @@ public class User {
 	private Date create_at;
 	private int point;
 	private Grade grade;
-	
+	private Authority authority;
 }

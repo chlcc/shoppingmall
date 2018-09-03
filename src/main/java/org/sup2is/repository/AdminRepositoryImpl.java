@@ -24,5 +24,11 @@ public class AdminRepositoryImpl implements AdminRepository {
 	public void addGoodsInfo(Map<String, Integer> param) {
 		sqlSessionTemplate.insert(namespace + "addGoodsInfo" , param);
 	}
+
+	@Override
+	public void updateUserAuth(Map<String, String> map) {
+		sqlSessionTemplate.update(namespace + "updateUserAuth" , map);
+		
+	}
 	
 }

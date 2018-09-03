@@ -9,11 +9,17 @@
 	</insert>
 	
 	<insert id="addGoodsInfo" parameterType="java.util.Map">
-			INSERT INTO goods_info (gno,color,count)
-			VALUES
-			  <foreach item="value" index="key" collection="_parameter.entrySet()" separator=",">
-				  	(LAST_INSERT_ID(), '${key}' , #{value})
-		     </foreach>
+		INSERT INTO goods_info (gno,color,count)
+		VALUES
+		 <foreach item="value" index="key" collection="_parameter.entrySet()" separator=",">
+			  	(LAST_INSERT_ID(), '${key}' , #{value})
+	     </foreach>
 	</insert>
+	
+	<update id="updateUserAuth" parameterType="java.util.Map">
+		UPDATE authorities
+		SET role = #{role}
+		where userId = #{userId} 
+	</update>	
 	
 </mapper>

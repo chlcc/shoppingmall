@@ -23,4 +23,15 @@
 		  SET address = #{address} , address_detailed = #{address_detailed} , phone = #{phone} , email = #{email}
 		WHERE userId = #{userId}
 	</update>
+	
+	<select id="findAll" resultType="org.sup2is.model.User" >
+		SELECT * FROM user
+	</select>
+	
+	<select id="findAuthByUserId" resultType="org.sup2is.model.Authority" parameterType="java.lang.String">
+		SELECT role
+		FROM authorities
+		WHERE userId = #{userId}
+	</select>
+	
 </mapper>

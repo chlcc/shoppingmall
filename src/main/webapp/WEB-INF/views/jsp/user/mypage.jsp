@@ -319,7 +319,7 @@ span.tags {
 										</div>
 									</div>
 									<div class="panel-body">
-										<c:if test="${cartList.size() < 0}"> 
+										<c:if test="${cartList.size() < 0 && empty cartList}"> 
 											<div class="row">
 												<hr>
 												<p style="text-align: center;"><strong>등록된 상품이 존재하지 않습니다.</strong></p>

@@ -16,7 +16,7 @@
 	                    <li><a href="${pagecontext.request.contextpath}/board/list/1">Q&amp;A</a></li>
 	                    
 	                    <sec:authorize access="hasRole('ROLE_USER')">
-	                   		<li><a href="${pagecontext.request.contextpath}/user/mypage">mypage</a></li>
+	                   		<li><a href="${pagecontext.request.contextpath}/user/mypage/tab1">mypage</a></li>
 	                   		<li><a href="${pagecontext.request.contextpath}/logout">logout</a></li>
 	                    </sec:authorize> 
                			<sec:authorize access="isAnonymous()">

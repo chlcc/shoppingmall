@@ -41,7 +41,7 @@ CREATE TABLE `board` (
 
 CREATE TABLE `authorities` (
   `userId` varchar(45) NOT NULL,
-  `role` varchar(45) NOT NULL DEFAULT 'ROLE_USER',
+  `role` enum('ROLE_ADMIN','ROLE_USER') NOT NULL,
   KEY `fk_username` (`userId`),
   CONSTRAINT `fk_username` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -37,5 +37,11 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 
+
+	@Override
+	public void updateUserAuth(Map<String, String> map) {
+		adminRepository.updateUserAuth(map);
+	}
+
 	
 }
