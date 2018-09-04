@@ -63,10 +63,13 @@ public class FileController extends BaseController {
 			if(limitFileSize < fileSize) {
 				return JsonObject.create(message.getMessage("invalid.fileSize", null, Locale.getDefault()));
 			}
-			
 			String defaultPath = multipartRequest.getServletContext().getRealPath("/");
 			logger.info(defaultPath);
-			String path = defaultPath + File.separator + "upload" + File.separator + category + File.separator + "images" + File.separator + "";
+			//windows
+			//String path = defaultPath + File.separator + "upload" + File.separator + category + File.separator + "images" + File.separator + "";
+			
+			// linux
+			String path = File.separator+ "var" + File.separator +"lib"+ File.separator +"tomcat8"+ File.separator +"webapps"+ File.separator + "upload" + File.separator + "images" + File.separator ;  
 			
 			File file = new File(path);
 			if(!file.exists()) {
@@ -77,12 +80,22 @@ public class FileController extends BaseController {
 			String today = dateFormat.format(new Date());
 			String modifyName = today + "-" + UUID.randomUUID().toString().substring(20) + "." +originalNameExtension;
 			
-			String imageurl = multipartRequest.getServletContext().getContextPath() + "/upload/" + category+ "/images/" + modifyName; 
+			//windows
+			//String imageurl = multipartRequest.getServletContext().getContextPath() + "/upload/" + category+ "/images/" + modifyName;
+			
+			//linux
+			//String imageurl =  File.separator + "upload" + File.separator + "images" + File.separator + modifyName;
+			String imageurl =  File.separator + "upload" + File.separator + "images" + File.separator + modifyName;
 			
 			FileInfo fileInfo = new FileInfo(modifyName, originalName, fileSize, imageurl, imageurl , category);
 				
             try {
+            	//windows
+            	//mFile.transferTo(new File(path+modifyName));
+            	
+            	//linux
             	mFile.transferTo(new File(path+modifyName));
+            	//Runtime.getRuntime().exec("chmod 777" + imageurl);
             	fileService.insertFile(fileInfo);
             	return JsonObject.create(fileInfo);
             } catch (Exception e) {

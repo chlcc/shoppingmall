@@ -33,14 +33,14 @@
 
 				</tbody>
 				<tbody id="list">
-					<c:if test="${list.size() < 0}">
+					<c:if test="${list.size() < 0 || empty list}">
 						<tr>
 							<td colspan="5" align="center"> 
-								<strong style="font-size: 20px;">등록된 글이 존재하지 않습니다.</strong>			
+								<strong style="font-size: 15px;">등록된 글이 존재하지 않습니다.</strong>			
 							</td>
 						</tr>
 					</c:if>
-					<c:forEach items="${list}" var="list">
+					<c:forEach items="${list}" var="list"> 
 						<tr>
 							<td>${list.bno}</td>
 							<td><a href="/board/${list.bno}">${list.title}</a></td>

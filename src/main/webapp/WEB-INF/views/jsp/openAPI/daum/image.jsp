@@ -115,9 +115,9 @@
 					<form id="daumImageForm" encType="multipart/form-data" method="post" action="">
 						<!-- 파일첨부 -->
 						<div class="file">
-							<input disabled class="file-text"> 
+							<input class="file-text" value=""> 
 							<label class="file-btn" for="uploadInputBox">사진첨부</label>
-							<input id="uploadInputBox" type="file" name="fileData" />
+							<input style="visibility: hidden;" id="uploadInputBox" type="file" name="fileData" />
 						</div>
 					</form>
 				</dd>
@@ -138,6 +138,9 @@
 	
 	<script type="text/javascript">
 	
+	$("#uploadInputBox").change(function () {
+		$(".file-text").val(this.value);
+	});	
 	
 	$(document).ready(function () {
 	

@@ -134,7 +134,9 @@
 											<c:if test="${user.authority == 'ROLE_ADMIN'}">
 												<option selected="selected" value="ROLE_ADMIN">ADMIN</option>
 											</c:if>
-											<option value="ROLE_ADMIN">ADMIN</option>
+											<c:if test="${user.authority != 'ROLE_ADMIN'}">
+												<option value="ROLE_ADMIN">ADMIN</option>
+											</c:if>
 										</select></td>
 										<td>${user.enabled}</td>
 										<td><fmt:formatDate value="${user.create_at}"  pattern="YY/MM/dd" /></td>
